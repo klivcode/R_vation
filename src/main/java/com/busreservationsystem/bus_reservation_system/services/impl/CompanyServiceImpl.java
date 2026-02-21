@@ -37,7 +37,6 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<CompanyResponseDTO> getAllCompany() {
         List<Company> companies = companyRepo.findAll();
-        List<CompanyResponseDTO> companyResponseDTOS = new ArrayList<>();
         return companies.stream()
                 .map(company -> new CompanyResponseDTO(
                         company.getId(),
