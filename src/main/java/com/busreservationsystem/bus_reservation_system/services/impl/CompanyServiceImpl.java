@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -35,7 +36,15 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyResponseDTO> getAllCompany() {
-        //TODO
-        return List.of();
+        List<Company> companies = companyRepo.findAll();
+        List<CompanyResponseDTO> companyResponseDTOS = new ArrayList<>();
+        return companies.stream()
+                .map(company -> new CompanyResponseDTO(
+                        company.getId(),
+                        company.getCompanyName(),
+                        company.getAddress(),
+                        company.getPhone()
+                ))
+                .toList();
     }
 }
