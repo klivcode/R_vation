@@ -2,6 +2,7 @@ package com.busreservationsystem.bus_reservation_system.controller;
 
 import com.busreservationsystem.bus_reservation_system.dto.request.CompanyRequestDTO;
 import com.busreservationsystem.bus_reservation_system.dto.response.CompanyResponseDTO;
+import com.busreservationsystem.bus_reservation_system.entity.Company;
 import com.busreservationsystem.bus_reservation_system.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
