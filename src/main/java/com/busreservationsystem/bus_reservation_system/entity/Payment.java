@@ -6,6 +6,7 @@ import com.busreservationsystem.bus_reservation_system.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -29,7 +30,7 @@ public class Payment extends BaseEntity {
     @Column(name = "payment_reference",nullable = false)
      private String paymentReference;
 
-    private Double amount;
+    private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod; // CASH, CARD, ESEWA, KHALTI, BANK_TRANSFER

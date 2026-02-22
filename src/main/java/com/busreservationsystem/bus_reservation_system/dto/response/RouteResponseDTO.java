@@ -1,5 +1,6 @@
 package com.busreservationsystem.bus_reservation_system.dto.response;
 
+import com.busreservationsystem.bus_reservation_system.dto.BaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,9 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class RouteResponseDTO {
+public class RouteResponseDTO extends BaseDto {
 
-    private Long id;
     private String source;
     private String destination;
     private Long companyId;

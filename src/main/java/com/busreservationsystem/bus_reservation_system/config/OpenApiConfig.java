@@ -1,4 +1,4 @@
-package com.busreservationsystem.bus_reservation_system.common;
+package com.busreservationsystem.bus_reservation_system.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

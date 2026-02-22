@@ -5,6 +5,7 @@ import com.busreservationsystem.bus_reservation_system.enums.ScheduleStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -42,7 +43,7 @@ public class Schedule extends BaseEntity {
 
 
     @Column(nullable = false)
-    private Double fareAmount;
+    private BigDecimal fareAmount;
 
     @Enumerated(EnumType.STRING)
     private ScheduleStatus scheduleStatus; // ACTIVE,COMPLETED
