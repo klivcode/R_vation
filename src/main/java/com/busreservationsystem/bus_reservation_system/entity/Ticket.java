@@ -2,7 +2,7 @@ package com.busreservationsystem.bus_reservation_system.entity;
 
 import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +17,11 @@ import java.time.LocalDateTime;
         }
 )
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Ticket extends BaseEntity {
 
     @Id

@@ -2,7 +2,7 @@ package com.busreservationsystem.bus_reservation_system.entity;
 
 import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Table(
@@ -14,7 +14,11 @@ import lombok.Data;
                 )
         }
 )
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Company extends BaseEntity {
 
     @Id

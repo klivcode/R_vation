@@ -3,7 +3,7 @@ package com.busreservationsystem.bus_reservation_system.entity;
 import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
 import com.busreservationsystem.bus_reservation_system.enums.SeatSide;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Optional;
 
@@ -17,7 +17,11 @@ import java.util.Optional;
                 )
         }
 )
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Bus extends BaseEntity {
 
     @Id

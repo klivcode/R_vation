@@ -3,14 +3,18 @@ package com.busreservationsystem.bus_reservation_system.entity;
 import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
 import com.busreservationsystem.bus_reservation_system.enums.ScheduleStatus;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(
         name = "schedules",

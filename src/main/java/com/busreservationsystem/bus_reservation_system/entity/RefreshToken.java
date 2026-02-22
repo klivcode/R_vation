@@ -1,12 +1,16 @@
 package com.busreservationsystem.bus_reservation_system.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "refresh_tokens")
 public class RefreshToken {

@@ -4,11 +4,15 @@ import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
 import com.busreservationsystem.bus_reservation_system.enums.PaymentMethod;
 import com.busreservationsystem.bus_reservation_system.enums.PaymentStatus;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "payments", uniqueConstraints = {
         @UniqueConstraint(name = "uk_payment_reference",

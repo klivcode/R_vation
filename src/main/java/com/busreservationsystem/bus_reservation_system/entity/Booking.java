@@ -4,13 +4,14 @@ import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
 import com.busreservationsystem.bus_reservation_system.enums.BookingStatus;
 import com.busreservationsystem.bus_reservation_system.enums.PaymentState;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 // multiple seats booking and partial payment support too
-
 @Entity
 @Table(
         name = "bookings",
@@ -18,50 +19,56 @@ import java.util.Set;
                 @UniqueConstraint(
                         name = "uk_booking_reference",
                         columnNames = {"booking_reference"}
-                ),
-                @UniqueConstraint(
-                        name = "uk_schedule_seat",
-                        columnNames = {"schedule_id", "seat_number"}
                 )
         }
 )
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Booking extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "booking_reference", nullable = false)
+    @Column(name = "booking_reference", nullable = false, unique = true)
     private String bookingReference;
 
-    private LocalDateTime  bookingDateTime;
+    @Column(nullable = false)
+    private LocalDateTime bookingDateTime;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private BookingStatus bookingStatus; // CONFIRMED, CANCELLED
 
-    private Double totalAmount;
-    private Double paidAmount;
-    private Double dueAmount;
+    @Column(nullable = false)
+    private BigDecimal totalAmount;
+
+    @Column(nullable = false)
+    private BigDecimal paidAmount;
+
+    @Column(nullable = false)
+    private BigDecimal dueAmount;
 
     @Enumerated(EnumType.STRING)
-    private PaymentState  paymentState;// FullY_PAID, PARTIALLY_PAID, UNPAID
+    @Column(nullable = false)
+    private PaymentState paymentState; // FULLY_PAID, PARTIALLY_PAID, UNPAID
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "customer_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "schedule_id", nullable = false)
     private Schedule schedule;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "booking_seats",
-            joinColumns = @JoinColumn(
-                    name = "booking_id"
-            ),
+            joinColumns = @JoinColumn(name = "booking_id"),
             inverseJoinColumns = @JoinColumn(name = "seat_id")
     )
-    private Set<Seat> seats;
+    private Set<Seat> seats = new HashSet<>();
 }

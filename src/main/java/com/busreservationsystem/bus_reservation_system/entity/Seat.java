@@ -5,9 +5,13 @@ import com.busreservationsystem.bus_reservation_system.enums.SeatSide;
 import com.busreservationsystem.bus_reservation_system.enums.SeatStatus;
 import com.busreservationsystem.bus_reservation_system.enums.SeatType;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(
         name = "seats",

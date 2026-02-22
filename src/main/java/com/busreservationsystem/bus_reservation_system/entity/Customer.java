@@ -3,10 +3,14 @@ package com.busreservationsystem.bus_reservation_system.entity;
 import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
 import com.busreservationsystem.bus_reservation_system.enums.Gender;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "customers",
 uniqueConstraints = {
         @UniqueConstraint(
