@@ -1,7 +1,10 @@
 package com.busreservationsystem.bus_reservation_system.entity;
 
+import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(
@@ -15,7 +18,7 @@ import lombok.Data;
 )
 
 @Data
-public class Ticket {
+public class Ticket extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +26,9 @@ public class Ticket {
 
     @Column(name = "ticket_number", nullable = false)
     private String ticketNumber;
+
+    private LocalDateTime issueDate;
+    private String qrCodeUrl;
 
     @OneToOne
     @JoinColumn(name = "booking_id", nullable = false)

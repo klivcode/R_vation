@@ -1,7 +1,9 @@
 package com.busreservationsystem.bus_reservation_system.entity;
 
+import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+
 @Entity
 @Table(
         name = "companies",
@@ -13,7 +15,7 @@ import lombok.Data;
         }
 )
 @Data
-public class Company {
+public class Company extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +29,5 @@ public class Company {
 
     @Column(nullable = false)
     private String phone;
+
 }

@@ -1,5 +1,9 @@
 package com.busreservationsystem.bus_reservation_system.entity;
 
+import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
+import com.busreservationsystem.bus_reservation_system.enums.SeatSide;
+import com.busreservationsystem.bus_reservation_system.enums.SeatStatus;
+import com.busreservationsystem.bus_reservation_system.enums.SeatType;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,24 +13,35 @@ import lombok.Data;
         name = "seats",
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name = "uk_bus_seat_number",
-                        columnNames = {"bus_id", "seat_number"}
+                        name = "uk_seat_schedule",
+                        columnNames = {"bus_id", "schedule_id"}
                 )
         }
 )
-public class Seat {
+public class Seat extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "seat_number", nullable = false)
-    private String seatNumber;
+    private String seatNumber; // A1,A2,B1,VIP1
 
-    @Column(nullable = false)
-    private String side; // A_SIDE or B_SIDE
 
-    @ManyToOne
-    @JoinColumn(name = "bus_id", nullable = false)
-    private Bus bus;
+    @Enumerated(EnumType.STRING)
+    private SeatSide side; // A_SIDE or B_SIDE
+
+
+    private Integer rowNumber;
+
+    @Enumerated(EnumType.STRING)
+    private SeatType seatType; // NORMAL , VIP
+
+    @Enumerated(EnumType.STRING)
+    private SeatStatus seatStatus; // AVAILABLE, BOOKED
+
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "schedule_id", nullable = false)
+    private Schedule schedule;
 }

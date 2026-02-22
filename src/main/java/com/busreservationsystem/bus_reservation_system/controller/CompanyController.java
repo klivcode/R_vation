@@ -17,14 +17,14 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
-    @PostMapping("/operator/company/register")
+    @PostMapping("/api/company/register")
     public ResponseEntity<CompanyResponseDTO> registerCompany(@RequestBody CompanyRequestDTO companyRequestDTO) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(companyService.registerCompany(companyRequestDTO));
     }
 
-    @GetMapping("/operator/company/getall")
+    @GetMapping("/api/company/getall")
       public ResponseEntity<List<CompanyResponseDTO>> getAllCompany()
     {
         return ResponseEntity

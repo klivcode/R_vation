@@ -1,9 +1,12 @@
 package com.busreservationsystem.bus_reservation_system.entity;
 
+import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
+import com.busreservationsystem.bus_reservation_system.enums.ScheduleStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 
@@ -19,7 +22,7 @@ import java.time.LocalTime;
         }
 )
 
-public class Schedule {
+public class Schedule extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,14 +34,22 @@ public class Schedule {
     @Column(name = "departure_time", nullable = false)
     private LocalTime departureTime;
 
-    @Column(nullable = false)
-    private Double fare;
+    @Column(name = "arrival_time",nullable = false)
+    private LocalDateTime arrivalTime;
 
-    @ManyToOne
+
+    @Column(nullable = false)
+    private Double fareAmount;
+
+    @Enumerated(EnumType.STRING)
+    private ScheduleStatus scheduleStatus; // ACTIVE,COMPLETED
+
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "bus_id", nullable = false)
     private Bus bus;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "route_id", nullable = false)
     private Route route;
 }

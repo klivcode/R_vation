@@ -1,8 +1,11 @@
 package com.busreservationsystem.bus_reservation_system.entity;
 
-
+import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
+import com.busreservationsystem.bus_reservation_system.enums.SeatSide;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.Optional;
 
 @Entity
 @Table(
@@ -15,7 +18,7 @@ import lombok.Data;
         }
 )
 @Data
-public class Bus {
+public class Bus extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,9 +27,22 @@ public class Bus {
     @Column(name = "bus_number", nullable = false)
     private String busNumber;
 
-    private Integer totalSeats;
+    private String busType; // AC " Non-AC ' Deluxe
 
-    @ManyToOne
+    private Integer totalSeats;
+    //Dynamic Layout support
+    @Column(nullable = false)
+    private String layoutPattern; // "2-2","2-1","3-2",.....
+
+    private Boolean hasVipSeat;
+
+    @Enumerated(EnumType.STRING)
+    private SeatSide vipSeatSide;
+
+    @Enumerated(EnumType.STRING)
+    private SeatSide lastRowExtraSide; // A,B
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 }

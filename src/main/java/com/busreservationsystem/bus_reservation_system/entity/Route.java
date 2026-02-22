@@ -1,5 +1,6 @@
 package com.busreservationsystem.bus_reservation_system.entity;
 
+import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,7 +15,7 @@ import lombok.Data;
                 )
         }
 )
-public class Route {
+public class Route extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +27,7 @@ public class Route {
     @Column(nullable = false)
     private String destination;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 }
