@@ -13,8 +13,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Entity
 @Table(
         name = "schedules",

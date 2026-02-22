@@ -24,8 +24,6 @@ import java.util.Set;
 )
 @Getter
 @Setter
-@RequiredArgsConstructor
-@AllArgsConstructor
 @NoArgsConstructor
 public class Booking extends BaseEntity {
 

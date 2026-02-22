@@ -9,8 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Table(name = "customers",
 uniqueConstraints = {
         @UniqueConstraint(

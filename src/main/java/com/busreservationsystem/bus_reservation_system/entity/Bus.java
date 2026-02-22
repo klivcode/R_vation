@@ -19,8 +19,6 @@ import java.util.Optional;
 )
 @Getter
 @Setter
-@RequiredArgsConstructor
-@AllArgsConstructor
 @NoArgsConstructor
 public class Bus extends BaseEntity {
 

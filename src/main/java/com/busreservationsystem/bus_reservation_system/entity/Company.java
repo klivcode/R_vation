@@ -17,8 +17,7 @@ import lombok.*;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class Company extends BaseEntity {
 
     @Id

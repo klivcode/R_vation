@@ -7,8 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Entity
 @Table(
         name = "routes",

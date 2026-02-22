@@ -8,8 +8,6 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users",
 uniqueConstraints = {
