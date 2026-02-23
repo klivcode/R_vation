@@ -17,7 +17,7 @@ import java.util.List;
 public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
-   private CompanyRepo companyRepo;
+    private CompanyRepo companyRepo;
 
     @Override
     public CompanyResponseDTO registerCompany(CompanyRequestDTO companyRequestDTO) {
@@ -28,7 +28,7 @@ public class CompanyServiceImpl implements CompanyService {
         company.setPhone(companyRequestDTO.getPhone());
         Company savedCompany = companyRepo.save(company);
         return new CompanyResponseDTO(
-                         savedCompany.getId(),
+                        savedCompany.getId(),
                         savedCompany.getCompanyName(),
                         savedCompany.getAddress(),
                         savedCompany.getPhone());
@@ -45,5 +45,19 @@ public class CompanyServiceImpl implements CompanyService {
                         company.getPhone()
                 ))
                 .toList();
+    }
+
+    @Override
+    public CompanyResponseDTO getCompanyById(Long id) {
+        Company company = companyRepo.findById(id)
+                .orElseThrow(()->new RuntimeException("Company with id " + id + " not found"));
+        return new CompanyResponseDTO(
+                company.getId(),
+                company.getCompanyName(),
+                company.getAddress(),
+                company.getPhone(),
+                company.getCreatedAt(),
+                company.getUpdatedAt()
+        );
     }
 }

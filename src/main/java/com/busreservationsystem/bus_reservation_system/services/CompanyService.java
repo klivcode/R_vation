@@ -11,4 +11,6 @@ public interface CompanyService {
     CompanyResponseDTO registerCompany(CompanyRequestDTO companyRequestDTO);
 
     List<CompanyResponseDTO> getAllCompany();
+
+    CompanyResponseDTO getCompanyById(Long id);
 }

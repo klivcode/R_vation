@@ -17,19 +17,27 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
-    @PostMapping("/api/company/register")
+    @PostMapping("/api/companies")
     public ResponseEntity<CompanyResponseDTO> registerCompany(@RequestBody CompanyRequestDTO companyRequestDTO) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(companyService.registerCompany(companyRequestDTO));
     }
 
-    @GetMapping("/api/company/getall")
+    @GetMapping("/api/companies/getall")
       public ResponseEntity<List<CompanyResponseDTO>> getAllCompany()
     {
         return ResponseEntity
                 .status(HttpStatus.FOUND)
                 .body(companyService.getAllCompany());
+    }
+
+
+    @GetMapping("/api/companies/{id}/get")
+    public ResponseEntity<CompanyResponseDTO> getCompany(@PathVariable Long id) {
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .body(companyService.getCompanyByid(id));
     }
 
 
