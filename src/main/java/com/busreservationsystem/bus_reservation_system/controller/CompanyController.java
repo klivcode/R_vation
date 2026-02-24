@@ -33,12 +33,27 @@ public class CompanyController {
     }
 
 
-    @GetMapping("/api/companies/{id}/get")
+    @GetMapping("/api/companies/{id}")
     public ResponseEntity<CompanyResponseDTO> getCompany(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.FOUND)
-                .body(companyService.getCompanyByid(id));
+                .body(companyService.getCompanyById(id));
     }
 
+    @DeleteMapping("/api/companies/{id}")
+    public ResponseEntity<Void> deleteCompany(@PathVariable Long id) {
+        companyService.deleteCompanyById(id);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
+    }
 
+    @PutMapping("/api/companies/{id}")
+    public ResponseEntity<CompanyResponseDTO> updateCompany(@RequestBody CompanyRequestDTO requestDto,
+                                                            @PathVariable Long id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(companyService.updateCompanyById(requestDto,id));
+
+    }
 }

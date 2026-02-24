@@ -13,4 +13,8 @@ public interface CompanyService {
     List<CompanyResponseDTO> getAllCompany();
 
     CompanyResponseDTO getCompanyById(Long id);
+
+    void deleteCompanyById(Long id);
+
+    CompanyResponseDTO updateCompanyById(CompanyRequestDTO requestDto, Long id);
 }

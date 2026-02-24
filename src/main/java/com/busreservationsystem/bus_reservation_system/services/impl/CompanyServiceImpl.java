@@ -3,12 +3,14 @@ package com.busreservationsystem.bus_reservation_system.services.impl;
 import com.busreservationsystem.bus_reservation_system.dto.request.CompanyRequestDTO;
 import com.busreservationsystem.bus_reservation_system.dto.response.CompanyResponseDTO;
 import com.busreservationsystem.bus_reservation_system.entity.Company;
+import com.busreservationsystem.bus_reservation_system.exception.ResourceNotFoundException;
 import com.busreservationsystem.bus_reservation_system.repository.CompanyRepo;
 import com.busreservationsystem.bus_reservation_system.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,10 @@ public class CompanyServiceImpl implements CompanyService {
                         savedCompany.getId(),
                         savedCompany.getCompanyName(),
                         savedCompany.getAddress(),
-                        savedCompany.getPhone());
+                        savedCompany.getPhone(),
+                        savedCompany.getCreatedAt(),
+                        savedCompany.getUpdatedAt()
+        );
     }
 
     @Override
@@ -60,4 +65,19 @@ public class CompanyServiceImpl implements CompanyService {
                 company.getUpdatedAt()
         );
     }
+
+    @Override
+    public void deleteCompanyById(Long id) {
+        Company company = companyRepo.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Company with id " + id + " not found"));
+        companyRepo.delete(company);
+
+    }
+
+    @Override
+    public CompanyResponseDTO updateCompanyById(CompanyRequestDTO requestDto, Long id) {
+        return null;
+    }
+
+
 }
