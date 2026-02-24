@@ -13,18 +13,26 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class CompanyController {
+
+    //Base URL: /api/companies
+    //
+    //Handles transport company management.
+
+
+
     @Autowired
     private CompanyService companyService;
 
-    @PostMapping("/api/companies")
+    @PostMapping("/companies")
     public ResponseEntity<CompanyResponseDTO> registerCompany(@RequestBody CompanyRequestDTO companyRequestDTO) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(companyService.registerCompany(companyRequestDTO));
     }
 
-    @GetMapping("/api/companies/getall")
+    @GetMapping("/companies/getall")
       public ResponseEntity<List<CompanyResponseDTO>> getAllCompany()
     {
         return ResponseEntity
@@ -33,14 +41,14 @@ public class CompanyController {
     }
 
 
-    @GetMapping("/api/companies/{id}")
+    @GetMapping("/companies/{id}")
     public ResponseEntity<CompanyResponseDTO> getCompany(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(companyService.getCompanyById(id));
     }
 
-    @DeleteMapping("/api/companies/{id}")
+    @DeleteMapping("/companies/{id}")
     public ResponseEntity<Void> deleteCompany(@PathVariable Long id) {
         companyService.deleteCompanyById(id);
         return ResponseEntity
@@ -48,7 +56,7 @@ public class CompanyController {
                 .build();
     }
 
-    @PutMapping("/api/companies/{id}")
+    @PutMapping("/companies/{id}")
     public ResponseEntity<CompanyResponseDTO> updateCompany(@RequestBody CompanyRequestDTO requestDto,
                                                             @PathVariable Long id) {
         return ResponseEntity

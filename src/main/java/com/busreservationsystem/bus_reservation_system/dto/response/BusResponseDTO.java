@@ -36,5 +36,4 @@ public class BusResponseDTO extends BaseDto {
         this.companyId = companyId;
         this.companyName = companyName;
     }
-
 }
