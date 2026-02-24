@@ -5,16 +5,15 @@ import com.busreservationsystem.bus_reservation_system.entity.Booking;
 import com.busreservationsystem.bus_reservation_system.enums.PaymentMethod;
 import com.busreservationsystem.bus_reservation_system.enums.PaymentState;
 import com.busreservationsystem.bus_reservation_system.enums.PaymentStatus;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class PaymentResponseDto extends BaseDto {
     private String paymentReference;
 

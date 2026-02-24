@@ -17,10 +17,13 @@ import java.time.LocalDateTime;
         }
 )
 
+
+
+
 @Getter
 @Setter
-@RequiredArgsConstructor
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class Ticket extends BaseEntity {
 
     @Id

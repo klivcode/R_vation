@@ -4,6 +4,7 @@ import com.busreservationsystem.bus_reservation_system.dto.BaseDto;
 import com.busreservationsystem.bus_reservation_system.enums.ScheduleStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ScheduleResponseDTO extends BaseDto {
 
     private LocalDate travelDate;

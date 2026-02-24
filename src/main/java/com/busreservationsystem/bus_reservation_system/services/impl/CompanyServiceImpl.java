@@ -30,12 +30,12 @@ public class CompanyServiceImpl implements CompanyService {
         company.setPhone(companyRequestDTO.getPhone());
         Company savedCompany = companyRepo.save(company);
         return new CompanyResponseDTO(
-                        savedCompany.getId(),
-                        savedCompany.getCompanyName(),
-                        savedCompany.getAddress(),
-                        savedCompany.getPhone(),
-                        savedCompany.getCreatedAt(),
-                        savedCompany.getUpdatedAt()
+                savedCompany.getId(),
+                savedCompany.getCreatedAt(),
+                savedCompany.getUpdatedAt(),
+                savedCompany.getCompanyName(),
+                savedCompany.getAddress(),
+                savedCompany.getPhone()
         );
     }
 
@@ -45,9 +45,12 @@ public class CompanyServiceImpl implements CompanyService {
         return companies.stream()
                 .map(company -> new CompanyResponseDTO(
                         company.getId(),
+                        company.getCreatedAt(),
+                        company.getUpdatedAt(),
                         company.getCompanyName(),
                         company.getAddress(),
                         company.getPhone()
+
                 ))
                 .toList();
     }
@@ -55,14 +58,15 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyResponseDTO getCompanyById(Long id) {
         Company company = companyRepo.findById(id)
-                .orElseThrow(()->new RuntimeException("Company with id " + id + " not found"));
+                .orElseThrow(()->new ResourceNotFoundException("Company with id " + id + " not found"));
         return new CompanyResponseDTO(
                 company.getId(),
+                company.getCreatedAt(),
+                company.getUpdatedAt(),
                 company.getCompanyName(),
                 company.getAddress(),
-                company.getPhone(),
-                company.getCreatedAt(),
-                company.getUpdatedAt()
+                company.getPhone()
+
         );
     }
 
@@ -83,11 +87,11 @@ public class CompanyServiceImpl implements CompanyService {
         Company savedCompany = companyRepo.save(company);
         return new CompanyResponseDTO(
                 savedCompany.getId(),
+                savedCompany.getUpdatedAt(),
+                savedCompany.getCreatedAt(),
                 savedCompany.getCompanyName(),
                 savedCompany.getAddress(),
-                savedCompany.getPhone(),
-                savedCompany.getUpdatedAt(),
-                savedCompany.getCreatedAt()
+                savedCompany.getPhone()
         );
     }
 

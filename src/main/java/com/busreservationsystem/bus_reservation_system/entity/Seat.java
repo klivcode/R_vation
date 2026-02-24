@@ -6,11 +6,10 @@ import com.busreservationsystem.bus_reservation_system.enums.SeatStatus;
 import com.busreservationsystem.bus_reservation_system.enums.SeatType;
 import jakarta.persistence.*;
 import lombok.*;
-
 @Getter
 @Setter
-@RequiredArgsConstructor
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(
         name = "seats",

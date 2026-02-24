@@ -4,13 +4,12 @@ import com.busreservationsystem.bus_reservation_system.dto.BaseDto;
 import com.busreservationsystem.bus_reservation_system.enums.SeatSide;
 import com.busreservationsystem.bus_reservation_system.enums.SeatStatus;
 import com.busreservationsystem.bus_reservation_system.enums.SeatType;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 // Used when fetching seat layout.
 public class SeatResponseDto extends BaseDto {
     private String seatNumber;   // A1, B1, VIP1

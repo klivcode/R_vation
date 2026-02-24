@@ -28,7 +28,7 @@ public class CompanyController {
       public ResponseEntity<List<CompanyResponseDTO>> getAllCompany()
     {
         return ResponseEntity
-                .status(HttpStatus.FOUND)
+                .status(HttpStatus.OK)
                 .body(companyService.getAllCompany());
     }
 
@@ -36,7 +36,7 @@ public class CompanyController {
     @GetMapping("/api/companies/{id}")
     public ResponseEntity<CompanyResponseDTO> getCompany(@PathVariable Long id) {
         return ResponseEntity
-                .status(HttpStatus.FOUND)
+                .status(HttpStatus.OK)
                 .body(companyService.getCompanyById(id));
     }
 

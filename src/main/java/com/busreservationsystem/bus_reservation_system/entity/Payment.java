@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
 @Table(name = "payments", uniqueConstraints = {

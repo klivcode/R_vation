@@ -17,9 +17,12 @@ import java.util.Optional;
                 )
         }
 )
+
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
+
 public class Bus extends BaseEntity {
 
     @Id

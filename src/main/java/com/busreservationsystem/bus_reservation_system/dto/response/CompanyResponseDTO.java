@@ -7,19 +7,18 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class CompanyResponseDTO extends BaseDto {
 
     private String companyName;
     private String address;
     private String phone;
-    public CompanyResponseDTO(Long id, String companyName, String address, String phone) {
-        super();
+
+
+    public CompanyResponseDTO(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String companyName, String address, String phone) {
+        super(id, createdAt, updatedAt);
+        this.companyName = companyName;
+        this.address = address;
+        this.phone = phone;
     }
-
-    public CompanyResponseDTO(Long id, String companyName, String address, String phone, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        super();
-    }
-
-
 }
