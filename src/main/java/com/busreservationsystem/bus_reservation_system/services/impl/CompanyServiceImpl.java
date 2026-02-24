@@ -76,7 +76,19 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyResponseDTO updateCompanyById(CompanyRequestDTO requestDto, Long id) {
-        return null;
+        Company company = companyRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Company with id " + id + " not found"));
+        company.setCompanyName(requestDto.getCompanyName());
+        company.setAddress(requestDto.getAddress());
+        company.setPhone(requestDto.getPhone());
+        Company savedCompany = companyRepo.save(company);
+        return new CompanyResponseDTO(
+                savedCompany.getId(),
+                savedCompany.getCompanyName(),
+                savedCompany.getAddress(),
+                savedCompany.getPhone(),
+                savedCompany.getUpdatedAt(),
+                savedCompany.getCreatedAt()
+        );
     }
 
 
