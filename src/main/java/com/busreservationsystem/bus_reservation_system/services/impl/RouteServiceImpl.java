@@ -9,6 +9,8 @@ import com.busreservationsystem.bus_reservation_system.repository.CompanyRepo;
 import com.busreservationsystem.bus_reservation_system.repository.RouteRepo;
 import com.busreservationsystem.bus_reservation_system.services.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -31,7 +33,9 @@ public class RouteServiceImpl implements RouteService {
         route.setSource(routeRequestDTO.getSource());
         route.setDestination(routeRequestDTO.getDestination());
         route.setCompany(company);
-
+        if(routeRequestDTO.getSource().equals(routeRequestDTO.getDestination())) {
+            throw new IllegalArgumentException("Destination and Source can't be same");
+        }
         Route savedRoute = routeRepo.save(route);
         // entity -> DTO
         return new RouteResponseDTO(
@@ -44,7 +48,20 @@ public class RouteServiceImpl implements RouteService {
         );
     }
 
-
+    @Override
+    public Page<RouteResponseDTO> getAllRoute(Pageable pageable) {
+        Page<Route> routes = routeRepo.findAll(pageable);
+        return routes.map(
+                route -> new RouteResponseDTO(
+                        route.getId(),
+                        route.getCreatedAt(),
+                        route.getUpdatedAt(),
+                        route.getSource(),
+                        route.getDestination(),
+                        route.getCompany().getId()
+                )
+        );
+    }
 
 
 }
