@@ -4,6 +4,7 @@ import com.busreservationsystem.bus_reservation_system.dto.request.CompanyReques
 import com.busreservationsystem.bus_reservation_system.dto.response.CompanyResponseDTO;
 import com.busreservationsystem.bus_reservation_system.entity.Company;
 import com.busreservationsystem.bus_reservation_system.services.CompanyService;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -71,11 +72,11 @@ public class CompanyController {
     // Searching (filter) the companyName and address of company
 
     @GetMapping("/companies")
-    public Page<CompanyResponseDTO> getCompanies(
+    public Page<CompanyResponseDTO> searchCompanies(
             @RequestParam(required = false) String companyName,
             @RequestParam(required = false) String address,
-            Pageable pageable
+            @ParameterObject Pageable pageable
     ) {
-        return companyService.getCompanies(companyName, address, pageable);
+        return companyService.searchCompanies(companyName, address, pageable);
     }
 }

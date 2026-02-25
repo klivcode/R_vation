@@ -4,6 +4,7 @@ import com.busreservationsystem.bus_reservation_system.dto.request.BusRequestDTO
 import com.busreservationsystem.bus_reservation_system.dto.response.BusResponseDTO;
 import com.busreservationsystem.bus_reservation_system.entity.Bus;
 import com.busreservationsystem.bus_reservation_system.services.BusService;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -67,16 +68,16 @@ public class BusController {
     }
     // search (filter By bus number, vip seat, company id,bus type)
     @GetMapping("/buses")
-    public ResponseEntity<Page<BusResponseDTO>> getCompany(
+    public ResponseEntity<Page<BusResponseDTO>> searchBus(
             @RequestParam(required = false) String busNumber,
             @RequestParam(required = false) Boolean hasVipSeat,
             @RequestParam(required = false) String busType,
             @RequestParam(required = false) Long companyId,
-            Pageable pageable
+            @ParameterObject Pageable pageable
     ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(busService.getCompany(
+                .body(busService.searchBus(
                         busNumber,
                         hasVipSeat,
                         busType,
@@ -84,7 +85,6 @@ public class BusController {
                         pageable
                 ));
     }
-
 
 
 }

@@ -138,7 +138,7 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public Page<BusResponseDTO> getCompany(String busNumber, Boolean hasVipSeat, String busType, Long companyId, Pageable pageable) {
+    public Page<BusResponseDTO> searchBus(String busNumber, Boolean hasVipSeat, String busType, Long companyId, Pageable pageable) {
         Specification<Bus> spec = (root, query, cb) -> cb.conjunction();
 
         if (busNumber != null && !busNumber.isBlank()) {

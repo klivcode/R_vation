@@ -20,5 +20,5 @@ public interface BusService {
 
     void deleteBusById(Long id);
 
-    Page<BusResponseDTO> getCompany(String busNumber, Boolean hasVipSeat, String busType, Long companyId, Pageable pageable);
+    Page<BusResponseDTO> searchBus(String busNumber, Boolean hasVipSeat, String busType, Long companyId, Pageable pageable);
 }

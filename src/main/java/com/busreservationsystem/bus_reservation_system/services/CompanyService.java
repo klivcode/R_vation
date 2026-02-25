@@ -22,5 +22,5 @@ public interface CompanyService {
 
     CompanyResponseDTO updateCompanyById(CompanyRequestDTO requestDto, Long id);
 
-    Page<CompanyResponseDTO> getCompanies(String companyName, String address, Pageable pageable);
+    Page<CompanyResponseDTO> searchCompanies(String companyName, String address, Pageable pageable);
 }

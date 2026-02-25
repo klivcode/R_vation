@@ -95,7 +95,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Page<CompanyResponseDTO> getCompanies(String companyName, String address,Pageable pageable) {
+    public Page<CompanyResponseDTO>searchCompanies(String companyName, String address,Pageable pageable) {
 
         Specification<Company> specification = Specification.where((root,query,cb)->cb.conjunction());
         // first we check the is there presence of CompanyName and to lowercase
