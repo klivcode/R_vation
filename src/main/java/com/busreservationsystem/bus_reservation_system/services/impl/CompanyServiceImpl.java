@@ -99,7 +99,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         Specification<Company> specification = Specification.where((root,query,cb)->cb.conjunction());
         // first we check the is there presence of CompanyName and to lowercase
-        if(companyName != null && !companyName.isEmpty()) {
+        if(companyName != null && !companyName.isBlank()) {
             specification=specification.and((root,query,cb)->cb
                     .like(
                             cb.lower(root.get("companyName")),
@@ -108,7 +108,7 @@ public class CompanyServiceImpl implements CompanyService {
             );
         }
         // same for the address as well
-        if(address != null && !address.isEmpty()) {
+        if(address != null && !address.isBlank()) {
             specification =specification.and((root, query, criteriaBuilder) ->  criteriaBuilder
                     .like(
                             criteriaBuilder.lower(root.get("address")),

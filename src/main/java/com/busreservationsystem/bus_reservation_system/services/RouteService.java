@@ -12,4 +12,12 @@ public interface RouteService {
     RouteResponseDTO registerRoute(RouteRequestDTO routeRequestDTO);
 
     Page<RouteResponseDTO> getAllRoute(Pageable pageable);
+
+    RouteResponseDTO getRouteById(Long id);
+
+    void deleteRouteById(Long id);
+
+    RouteResponseDTO updateRouteById(Long id, RouteRequestDTO routeRequestDto);
+
+    Page<RouteResponseDTO> searchRoutes(Pageable pageable, String source, String destination,Long companyId);
 }

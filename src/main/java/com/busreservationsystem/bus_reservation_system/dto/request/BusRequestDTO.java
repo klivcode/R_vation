@@ -25,4 +25,5 @@ public class BusRequestDTO {
     private SeatSide lastRowExtraSide;
     @NotNull
     private Long companyId;
+
 }
