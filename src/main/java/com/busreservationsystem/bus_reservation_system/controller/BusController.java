@@ -40,4 +40,27 @@ public class BusController {
                 .status(HttpStatus.OK)
                 .body(busService.getAllBus());
     }
+    @GetMapping("/buses/{id}")
+    public ResponseEntity<BusResponseDTO> getBus(@PathVariable long id)
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(busService.getBusById(id));
+    }
+
+    @PutMapping("/buses/{id}")
+    public ResponseEntity<BusResponseDTO> updateBus(@RequestBody  BusRequestDTO busRequestDto,
+                                                    @PathVariable long id)
+    {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(busService.updateBusById(busRequestDto,id));
+    }
+    @DeleteMapping("/buses/{id}")
+    public ResponseEntity<Void> deleteBus(@PathVariable Long id) {
+        busService.deleteBusById(id);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
+    }
 }

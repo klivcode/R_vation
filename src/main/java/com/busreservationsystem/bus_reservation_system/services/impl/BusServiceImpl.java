@@ -76,4 +76,63 @@ public class BusServiceImpl implements BusService {
 
                 )).toList();
     }
+
+    @Override
+    public BusResponseDTO getBusById(long id) {
+        Bus bus= busRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Company not found"));
+        return new BusResponseDTO(
+                bus.getId(),
+                bus.getCreatedAt(),
+                bus.getUpdatedAt(),
+                bus.getBusNumber(),
+                bus.getTotalSeats(),
+                bus.getBusType(),
+                bus.getLayoutPattern(),
+                bus.getHasVipSeat(),
+                bus.getLastRowExtraSide(),
+                bus.getVipSeatSide(),
+                bus.getCompany().getId(),
+                bus.getCompany().getCompanyName()
+
+        );
+    }
+
+    @Override
+    public BusResponseDTO updateBusById(BusRequestDTO busRequestDto, long id) {
+        Bus bus = busRepo.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Company not found"));
+        bus.setBusNumber(busRequestDto.getBusNumber());
+        bus.setBusType(busRequestDto.getBusType());
+        bus.setHasVipSeat(busRequestDto.getHasVipSeat());
+        bus.setVipSeatSide(busRequestDto.getVipSide());
+        bus.setTotalSeats(busRequestDto.getTotalSeats());
+        bus.setLayoutPattern(busRequestDto.getLayoutPattern());
+        bus.setLastRowExtraSide(busRequestDto.getLastRowExtraSide());
+        bus.setCompany(bus.getCompany());
+        Bus savedBus = busRepo.save(bus);
+        return new BusResponseDTO(
+                savedBus.getId(),
+                savedBus.getCreatedAt(),
+                savedBus.getUpdatedAt(),
+                savedBus.getBusNumber(),
+                savedBus.getTotalSeats(),
+                savedBus.getBusType(),
+                savedBus.getLayoutPattern(),
+                savedBus.getHasVipSeat(),
+                savedBus.getVipSeatSide(),
+                savedBus.getLastRowExtraSide(),
+                savedBus.getCompany().getId(),
+                savedBus.getCompany().getCompanyName()
+        );
+
+
+    }
+
+    @Override
+    public void deleteBusById(Long id) {
+        Bus bus = busRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Company not found"));
+        busRepo.delete(bus);
+    }
+
+
 }

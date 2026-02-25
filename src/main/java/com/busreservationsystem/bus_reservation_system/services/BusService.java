@@ -11,4 +11,10 @@ public interface BusService {
     BusResponseDTO registerBus(BusRequestDTO busRequestDto);
 
     List<BusResponseDTO> getAllBus();
+
+    BusResponseDTO getBusById(long id);
+
+    BusResponseDTO updateBusById(BusRequestDTO busRequestDto, long id);
+
+    void deleteBusById(Long id);
 }
