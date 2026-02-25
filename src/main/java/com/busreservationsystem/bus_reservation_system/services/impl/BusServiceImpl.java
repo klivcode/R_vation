@@ -300,7 +300,7 @@ public class BusServiceImpl implements BusService {
             }
         }
 
-        // 🔹 ATTACH EXTRA SEATS TO LAST FULL ROW
+        //  ATTACH EXTRA SEATS TO LAST FULL ROW
         if (remainder > 0) {
 
             SeatSide extraSide = bus.getLastRowExtraSide();
@@ -327,7 +327,7 @@ public class BusServiceImpl implements BusService {
             }
         }
 
-        // 🔹 APPLY VIP (FIRST ROW ONLY)
+        // APPLY VIP (FIRST ROW ONLY)
         if (bus.getHasVipSeat()) {
 
             SeatSide vipSide = bus.getVipSeatSide();
