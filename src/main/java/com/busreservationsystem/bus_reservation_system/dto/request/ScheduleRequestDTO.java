@@ -1,5 +1,6 @@
 package com.busreservationsystem.bus_reservation_system.dto.request;
 
+import com.busreservationsystem.bus_reservation_system.enums.ScheduleStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class ScheduleRequestDTO {
     private LocalDateTime departureTime;
     @NotNull
     private LocalDateTime arrivalTime;
+    private ScheduleStatus scheduleStatus;
     @NotNull
     private BigDecimal fareAmount;
 

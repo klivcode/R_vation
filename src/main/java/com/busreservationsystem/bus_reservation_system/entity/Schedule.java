@@ -36,7 +36,7 @@ public class Schedule extends BaseEntity {
     private LocalDate travelDate;
 
     @Column(name = "departure_time", nullable = false)
-    private LocalTime departureTime;
+    private LocalDateTime departureTime;
 
     @Column(name = "arrival_time",nullable = false)
     private LocalDateTime arrivalTime;

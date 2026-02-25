@@ -2,6 +2,7 @@ package com.busreservationsystem.bus_reservation_system.services;
 
 import com.busreservationsystem.bus_reservation_system.dto.request.BusRequestDTO;
 import com.busreservationsystem.bus_reservation_system.dto.response.BusResponseDTO;
+import com.busreservationsystem.bus_reservation_system.entity.Bus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,4 +22,6 @@ public interface BusService {
     void deleteBusById(Long id);
 
     Page<BusResponseDTO> searchBus(String busNumber, Boolean hasVipSeat, String busType, Long companyId, Pageable pageable);
+
+
 }

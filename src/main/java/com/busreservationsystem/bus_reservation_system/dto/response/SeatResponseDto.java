@@ -6,9 +6,10 @@ import com.busreservationsystem.bus_reservation_system.enums.SeatStatus;
 import com.busreservationsystem.bus_reservation_system.enums.SeatType;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 // Used when fetching seat layout.
 public class SeatResponseDto extends BaseDto {
@@ -18,4 +19,12 @@ public class SeatResponseDto extends BaseDto {
     private SeatType seatType;
     private SeatStatus status;
 
+    public SeatResponseDto(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String seatNumber, SeatSide side, Integer rowNumber, SeatType seatType, SeatStatus status) {
+        super(id, createdAt, updatedAt);
+        this.seatNumber = seatNumber;
+        this.side = side;
+        this.rowNumber = rowNumber;
+        this.seatType = seatType;
+        this.status = status;
+    }
 }

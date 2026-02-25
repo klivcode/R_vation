@@ -16,7 +16,7 @@ import lombok.*;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "uk_seat_schedule",
-                        columnNames = {"bus_id", "schedule_id"}
+                        columnNames = {"seat_number", "schedule_id"}
                 )
         }
 )

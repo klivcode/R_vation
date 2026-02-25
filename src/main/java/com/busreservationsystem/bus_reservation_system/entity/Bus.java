@@ -5,6 +5,8 @@ import com.busreservationsystem.bus_reservation_system.enums.SeatSide;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -50,4 +52,7 @@ public class Bus extends BaseEntity {
     @ManyToOne(optional = false)
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
+
+    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BusSeat> busSeats = new ArrayList<>();
 }
