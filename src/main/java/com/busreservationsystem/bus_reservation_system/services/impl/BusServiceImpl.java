@@ -10,6 +10,8 @@ import com.busreservationsystem.bus_reservation_system.repository.BusRepo;
 import com.busreservationsystem.bus_reservation_system.repository.CompanyRepo;
 import com.busreservationsystem.bus_reservation_system.services.BusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -57,9 +59,9 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public List<BusResponseDTO> getAllBus() {
-        List<Bus> Bus  = busRepo.findAll();
-        return Bus.stream()
+    public Page<BusResponseDTO> getAllBus(Pageable pageable) {
+        Page <Bus> Bus  = busRepo.findAll(pageable);
+        return Bus
                 .map(bus->new BusResponseDTO(
                         bus.getId(),
                         bus.getCreatedAt(),
@@ -74,7 +76,7 @@ public class BusServiceImpl implements BusService {
                         bus.getCompany().getId(),
                         bus.getCompany().getCompanyName()
 
-                )).toList();
+                ));
     }
 
     @Override

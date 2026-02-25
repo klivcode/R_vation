@@ -5,6 +5,8 @@ import com.busreservationsystem.bus_reservation_system.dto.response.BusResponseD
 import com.busreservationsystem.bus_reservation_system.entity.Bus;
 import com.busreservationsystem.bus_reservation_system.services.BusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,12 +35,12 @@ public class BusController {
 
 
     @GetMapping("/buses/getall")
-    public ResponseEntity<List<BusResponseDTO>>  getAllBus()
+    public ResponseEntity<Page<BusResponseDTO>>  getAllBus(Pageable pageable)
     {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(busService.getAllBus());
+                .body(busService.getAllBus(pageable));
     }
     @GetMapping("/buses/{id}")
     public ResponseEntity<BusResponseDTO> getBus(@PathVariable long id)
@@ -63,4 +65,5 @@ public class BusController {
                 .status(HttpStatus.NO_CONTENT)
                 .build();
     }
+    // search (filter By bus number, vip seat, company id,bus type
 }
