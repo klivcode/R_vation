@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
@@ -29,4 +31,13 @@ public class BusController {
                 .body(busService.registerBus(busRequestDto));
     }
 
+
+    @GetMapping("/buses/getall")
+    public ResponseEntity<List<BusResponseDTO>>  getAllBus()
+    {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(busService.getAllBus());
+    }
 }

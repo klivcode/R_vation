@@ -6,16 +6,17 @@ import com.busreservationsystem.bus_reservation_system.entity.Company;
 import com.busreservationsystem.bus_reservation_system.exception.ResourceNotFoundException;
 import com.busreservationsystem.bus_reservation_system.repository.CompanyRepo;
 import com.busreservationsystem.bus_reservation_system.services.CompanyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
+
 public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
@@ -40,21 +41,19 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<CompanyResponseDTO> getAllCompany() {
-        List<Company> companies = companyRepo.findAll();
-        return companies.stream()
-                .map(company -> new CompanyResponseDTO(
-                        company.getId(),
-                        company.getCreatedAt(),
-                        company.getUpdatedAt(),
-                        company.getCompanyName(),
-                        company.getAddress(),
-                        company.getPhone()
+    public Page<CompanyResponseDTO> getAllCompany(Pageable pageable) {
 
-                ))
-                .toList();
+        Page<Company> companies = companyRepo.findAll(pageable);
+
+        return companies.map(company -> new CompanyResponseDTO(
+                company.getId(),
+                company.getCreatedAt(),
+                company.getUpdatedAt(),
+                company.getCompanyName(),
+                company.getAddress(),
+                company.getPhone()
+        ));
     }
-
     @Override
     public CompanyResponseDTO getCompanyById(Long id) {
         Company company = companyRepo.findById(id)
@@ -93,6 +92,42 @@ public class CompanyServiceImpl implements CompanyService {
                 savedCompany.getAddress(),
                 savedCompany.getPhone()
         );
+    }
+
+    @Override
+    public Page<CompanyResponseDTO> getCompanies(String companyName, String address,Pageable pageable) {
+
+        Specification<Company> specification = Specification.where((root,query,cb)->cb.conjunction());
+        // first we check the is there presence of CompanyName and to lowercase
+        if(companyName != null && !companyName.isEmpty()) {
+            specification=specification.and((root,query,cb)->cb
+                    .like(
+                            cb.lower(root.get("companyName")),
+                            "%"+companyName.toLowerCase()+"%")
+
+            );
+        }
+        // same for the address as well
+        if(address != null && !address.isEmpty()) {
+            specification =specification.and((root, query, criteriaBuilder) ->  criteriaBuilder
+                    .like(
+                            criteriaBuilder.lower(root.get("address")),
+                            "%"+address.toLowerCase()+"%")
+
+            );
+
+        }
+
+        Page <Company> companies = companyRepo.findAll(specification, pageable);
+        return companies
+                .map(company -> new CompanyResponseDTO(
+                        company.getId(),
+                        company.getCreatedAt(),
+                        company.getUpdatedAt(),
+                        company.getCompanyName(),
+                        company.getAddress(),
+                        company.getPhone()
+                ));
     }
 
 

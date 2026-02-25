@@ -5,6 +5,8 @@ import com.busreservationsystem.bus_reservation_system.dto.response.CompanyRespo
 import com.busreservationsystem.bus_reservation_system.entity.Company;
 import com.busreservationsystem.bus_reservation_system.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +35,11 @@ public class CompanyController {
     }
 
     @GetMapping("/companies/getall")
-      public ResponseEntity<List<CompanyResponseDTO>> getAllCompany()
+      public ResponseEntity<Page<CompanyResponseDTO>> getAllCompany(Pageable pageable)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(companyService.getAllCompany());
+                .body(companyService.getAllCompany(pageable));
     }
 
 
@@ -63,5 +65,17 @@ public class CompanyController {
                 .status(HttpStatus.OK)
                 .body(companyService.updateCompanyById(requestDto,id));
 
+    }
+
+
+    // Searching (filter) the companyName and address of company
+
+    @GetMapping("/companies")
+    public Page<CompanyResponseDTO> getCompanies(
+            @RequestParam(required = false) String companyName,
+            @RequestParam(required = false) String address,
+            Pageable pageable
+    ) {
+        return companyService.getCompanies(companyName, address, pageable);
     }
 }

@@ -12,6 +12,8 @@ import com.busreservationsystem.bus_reservation_system.services.BusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class BusServiceImpl implements BusService {
     @Autowired
@@ -52,5 +54,26 @@ public class BusServiceImpl implements BusService {
                 savedBus.getCompany().getId(),
                 savedBus.getCompany().getCompanyName()
         );
+    }
+
+    @Override
+    public List<BusResponseDTO> getAllBus() {
+        List<Bus> Bus  = busRepo.findAll();
+        return Bus.stream()
+                .map(bus->new BusResponseDTO(
+                        bus.getId(),
+                        bus.getCreatedAt(),
+                        bus.getUpdatedAt(),
+                        bus.getBusNumber(),
+                        bus.getTotalSeats(),
+                        bus.getBusType(),
+                        bus.getLayoutPattern(),
+                        bus.getHasVipSeat(),
+                        bus.getLastRowExtraSide(),
+                        bus.getVipSeatSide(),
+                        bus.getCompany().getId(),
+                        bus.getCompany().getCompanyName()
+
+                )).toList();
     }
 }
