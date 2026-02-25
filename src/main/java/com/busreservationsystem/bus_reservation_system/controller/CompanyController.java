@@ -4,6 +4,8 @@ import com.busreservationsystem.bus_reservation_system.dto.request.CompanyReques
 import com.busreservationsystem.bus_reservation_system.dto.response.CompanyResponseDTO;
 import com.busreservationsystem.bus_reservation_system.entity.Company;
 import com.busreservationsystem.bus_reservation_system.services.CompanyService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -70,9 +72,15 @@ public class CompanyController {
 
 
     // Searching (filter) the companyName and address of company
-
+    @Tag(name = "Company API", description = "APIs for managing and searching transport companies")
+    @Operation(
+            summary = "Search Companies",
+            description = "Search companies using optional filters such as company name and address with pagination and sorting support."
+    )
     @GetMapping("/companies")
     public Page<CompanyResponseDTO> searchCompanies(
+
+
             @RequestParam(required = false) String companyName,
             @RequestParam(required = false) String address,
             @ParameterObject Pageable pageable

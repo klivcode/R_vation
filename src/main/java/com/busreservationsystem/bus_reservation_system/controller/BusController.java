@@ -4,6 +4,8 @@ import com.busreservationsystem.bus_reservation_system.dto.request.BusRequestDTO
 import com.busreservationsystem.bus_reservation_system.dto.response.BusResponseDTO;
 import com.busreservationsystem.bus_reservation_system.entity.Bus;
 import com.busreservationsystem.bus_reservation_system.services.BusService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,7 +68,17 @@ public class BusController {
                 .status(HttpStatus.NO_CONTENT)
                 .build();
     }
+
+
+
+
     // search (filter By bus number, vip seat, company id,bus type)
+    @Tag(name = "Bus API", description = "APIs for managing and searching buses")
+    @Operation(
+            summary = "Search Buses",
+            description = "Search buses using optional filters like bus number, VIP seat availability, bus type, and company ID with pagination support."
+    )
+
     @GetMapping("/buses")
     public ResponseEntity<Page<BusResponseDTO>> searchBus(
             @RequestParam(required = false) String busNumber,

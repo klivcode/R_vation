@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class BusReservationSystemApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(BusReservationSystemApplication.class, args);
     }
 
