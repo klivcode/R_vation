@@ -19,4 +19,6 @@ public interface BusService {
     BusResponseDTO updateBusById(BusRequestDTO busRequestDto, long id);
 
     void deleteBusById(Long id);
+
+    Page<BusResponseDTO> getCompany(String busNumber, Boolean hasVipSeat, String busType, Long companyId, Pageable pageable);
 }

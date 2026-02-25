@@ -65,5 +65,26 @@ public class BusController {
                 .status(HttpStatus.NO_CONTENT)
                 .build();
     }
-    // search (filter By bus number, vip seat, company id,bus type
+    // search (filter By bus number, vip seat, company id,bus type)
+    @GetMapping("/buses")
+    public ResponseEntity<Page<BusResponseDTO>> getCompany(
+            @RequestParam(required = false) String busNumber,
+            @RequestParam(required = false) Boolean hasVipSeat,
+            @RequestParam(required = false) String busType,
+            @RequestParam(required = false) Long companyId,
+            Pageable pageable
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(busService.getCompany(
+                        busNumber,
+                        hasVipSeat,
+                        busType,
+                        companyId,
+                        pageable
+                ));
+    }
+
+
+
 }

@@ -12,6 +12,7 @@ import com.busreservationsystem.bus_reservation_system.services.BusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -134,6 +135,59 @@ public class BusServiceImpl implements BusService {
     public void deleteBusById(Long id) {
         Bus bus = busRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Company not found"));
         busRepo.delete(bus);
+    }
+
+    @Override
+    public Page<BusResponseDTO> getCompany(String busNumber, Boolean hasVipSeat, String busType, Long companyId, Pageable pageable) {
+        Specification<Bus> spec = (root, query, cb) -> cb.conjunction();
+
+        if (busNumber != null && !busNumber.isBlank()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.like(
+                            cb.lower(root.get("busNumber")),
+                            busNumber.toLowerCase() + "%"
+                    )
+            );
+        }
+
+        if (hasVipSeat != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(root.get("hasVipSeat"), hasVipSeat)
+            );
+        }
+
+        if (busType != null && !busType.isBlank()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(
+                            cb.lower(root.get("busType")),
+                            busType.toLowerCase()
+                    )
+            );
+        }
+
+        if (companyId != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(root.get("company").get("id"), companyId)
+            );
+        }
+
+        Page<Bus> buses = busRepo.findAll(spec, pageable);
+
+        return buses
+                .map(bus->new BusResponseDTO(
+                        bus.getId(),
+                        bus.getCreatedAt(),
+                        bus.getUpdatedAt(),
+                        bus.getBusNumber(),
+                        bus.getTotalSeats(),
+                        bus.getBusType(),
+                        bus.getLayoutPattern(),
+                        bus.getHasVipSeat(),
+                        bus.getLastRowExtraSide(),
+                        bus.getVipSeatSide(),
+                        bus.getCompany().getId(),
+                        bus.getCompany().getCompanyName()
+                ));
     }
 
 
