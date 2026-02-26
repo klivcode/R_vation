@@ -1,8 +1,7 @@
 package com.busreservationsystem.bus_reservation_system.controller;
 
-import com.busreservationsystem.bus_reservation_system.dto.request.CompanyRequestDTO;
-import com.busreservationsystem.bus_reservation_system.dto.response.CompanyResponseDTO;
-import com.busreservationsystem.bus_reservation_system.entity.Company;
+import com.busreservationsystem.bus_reservation_system.dto.request.CompanyRequestDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.CompanyResponseDto;
 import com.busreservationsystem.bus_reservation_system.services.CompanyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -31,14 +28,14 @@ public class CompanyController {
     private CompanyService companyService;
 
     @PostMapping("/companies")
-    public ResponseEntity<CompanyResponseDTO> registerCompany(@RequestBody CompanyRequestDTO companyRequestDTO) {
+    public ResponseEntity<CompanyResponseDto> registerCompany(@RequestBody CompanyRequestDto companyRequestDTO) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(companyService.registerCompany(companyRequestDTO));
     }
 
     @GetMapping("/companies/getall")
-      public ResponseEntity<Page<CompanyResponseDTO>> getAllCompany(Pageable pageable)
+      public ResponseEntity<Page<CompanyResponseDto>> getAllCompany(Pageable pageable)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -47,7 +44,7 @@ public class CompanyController {
 
 
     @GetMapping("/companies/{id}")
-    public ResponseEntity<CompanyResponseDTO> getCompany(@PathVariable Long id) {
+    public ResponseEntity<CompanyResponseDto> getCompany(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(companyService.getCompanyById(id));
@@ -62,7 +59,7 @@ public class CompanyController {
     }
 
     @PutMapping("/companies/{id}")
-    public ResponseEntity<CompanyResponseDTO> updateCompany(@RequestBody CompanyRequestDTO requestDto,
+    public ResponseEntity<CompanyResponseDto> updateCompany(@RequestBody CompanyRequestDto requestDto,
                                                             @PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -78,7 +75,7 @@ public class CompanyController {
             description = "Search companies using optional filters such as company name and address with pagination and sorting support."
     )
     @GetMapping("/companies")
-    public Page<CompanyResponseDTO> searchCompanies(
+    public Page<CompanyResponseDto> searchCompanies(
 
 
             @RequestParam(required = false) String companyName,

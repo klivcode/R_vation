@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BusRequestDTO {
+public class BusRequestDto {
 
     @NotBlank
     private String busNumber;

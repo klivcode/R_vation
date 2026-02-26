@@ -1,8 +1,7 @@
 package com.busreservationsystem.bus_reservation_system.controller;
 
-import com.busreservationsystem.bus_reservation_system.dto.request.BusRequestDTO;
-import com.busreservationsystem.bus_reservation_system.dto.response.BusResponseDTO;
-import com.busreservationsystem.bus_reservation_system.entity.Bus;
+import com.busreservationsystem.bus_reservation_system.dto.request.BusRequestDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.BusResponseDto;
 import com.busreservationsystem.bus_reservation_system.services.BusService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -29,7 +26,7 @@ public class BusController {
 
 
     @PostMapping("/buses")
-    public ResponseEntity<BusResponseDTO> createBus(@RequestBody BusRequestDTO busRequestDto)
+    public ResponseEntity<BusResponseDto> createBus(@RequestBody BusRequestDto busRequestDto)
     {
         return  ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -38,7 +35,7 @@ public class BusController {
 
 
     @GetMapping("/buses/getall")
-    public ResponseEntity<Page<BusResponseDTO>>  getAllBus(Pageable pageable)
+    public ResponseEntity<Page<BusResponseDto>>  getAllBus(Pageable pageable)
     {
 
         return ResponseEntity
@@ -46,7 +43,7 @@ public class BusController {
                 .body(busService.getAllBus(pageable));
     }
     @GetMapping("/buses/{id}")
-    public ResponseEntity<BusResponseDTO> getBus(@PathVariable long id)
+    public ResponseEntity<BusResponseDto> getBus(@PathVariable long id)
     {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -54,7 +51,7 @@ public class BusController {
     }
 
     @PutMapping("/buses/{id}")
-    public ResponseEntity<BusResponseDTO> updateBus(@RequestBody  BusRequestDTO busRequestDto,
+    public ResponseEntity<BusResponseDto> updateBus(@RequestBody BusRequestDto busRequestDto,
                                                     @PathVariable long id)
     {
         return ResponseEntity
@@ -80,7 +77,7 @@ public class BusController {
     )
 
     @GetMapping("/buses")
-    public ResponseEntity<Page<BusResponseDTO>> searchBus(
+    public ResponseEntity<Page<BusResponseDto>> searchBus(
             @RequestParam(required = false) String busNumber,
             @RequestParam(required = false) Boolean hasVipSeat,
             @RequestParam(required = false) String busType,

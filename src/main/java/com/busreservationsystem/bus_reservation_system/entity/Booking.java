@@ -8,7 +8,9 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 // multiple seats booking and partial payment support too
@@ -28,6 +30,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Booking extends BaseEntity {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,7 +43,7 @@ public class Booking extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BookingStatus bookingStatus; // CONFIRMED, CANCELLED
+    private BookingStatus bookingStatus;
 
     @Column(nullable = false)
     private BigDecimal totalAmount;
@@ -53,7 +56,7 @@ public class Booking extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PaymentState paymentState; // FULLY_PAID, PARTIALLY_PAID, UNPAID
+    private PaymentState paymentState;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
@@ -63,11 +66,9 @@ public class Booking extends BaseEntity {
     @JoinColumn(name = "schedule_id", nullable = false)
     private Schedule schedule;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "booking_seats",
-            joinColumns = @JoinColumn(name = "booking_id"),
-            inverseJoinColumns = @JoinColumn(name = "seat_id")
-    )
-    private Set<Seat> seats = new HashSet<>();
+    // 🔥 Replace ManyToMany with OneToMany
+    @OneToMany(mappedBy = "booking",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<BookingSeat> bookingSeats = new ArrayList<>();
 }

@@ -39,8 +39,8 @@ public class Seat extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SeatType seatType; // NORMAL , VIP
 
-    @Enumerated(EnumType.STRING)
-    private SeatStatus seatStatus; // AVAILABLE, BOOKED
+//    @Enumerated(EnumType.STRING)
+//    private SeatStatus seatStatus; // AVAILABLE, BOOKED
 
 
     @ManyToOne(optional = false)

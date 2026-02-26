@@ -1,12 +1,11 @@
 package com.busreservationsystem.bus_reservation_system.services;
 
-import com.busreservationsystem.bus_reservation_system.dto.request.ScheduleRequestDTO;
-import com.busreservationsystem.bus_reservation_system.dto.response.ScheduleResponseDTO;
-import com.busreservationsystem.bus_reservation_system.entity.Schedule;
+import com.busreservationsystem.bus_reservation_system.dto.request.ScheduleRequestDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.ScheduleResponseDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface ScheduleService {
-    ScheduleResponseDTO createSchedule(ScheduleRequestDTO scheduleRequestDTO);
+    ScheduleResponseDto createSchedule(ScheduleRequestDto scheduleRequestDTO);
 
 }

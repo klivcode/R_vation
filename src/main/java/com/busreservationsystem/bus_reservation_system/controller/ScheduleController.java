@@ -1,19 +1,15 @@
 package com.busreservationsystem.bus_reservation_system.controller;
 
 
-import com.busreservationsystem.bus_reservation_system.dto.request.ScheduleRequestDTO;
-import com.busreservationsystem.bus_reservation_system.dto.response.ScheduleResponseDTO;
+import com.busreservationsystem.bus_reservation_system.dto.request.ScheduleRequestDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.ScheduleResponseDto;
 import com.busreservationsystem.bus_reservation_system.dto.response.SeatLayoutResponseDto;
-import com.busreservationsystem.bus_reservation_system.entity.Schedule;
-import com.busreservationsystem.bus_reservation_system.repository.ScheduleRepo;
 import com.busreservationsystem.bus_reservation_system.services.ScheduleService;
 import com.busreservationsystem.bus_reservation_system.services.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -29,7 +25,7 @@ public class ScheduleController {
     private SeatService seatService;
 
     @PostMapping("/schedules")
-    public ResponseEntity<ScheduleResponseDTO> createSchedule(@RequestBody ScheduleRequestDTO scheduleRequestDTO) {
+    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto scheduleRequestDTO) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(scheduleService.createSchedule(scheduleRequestDTO));
@@ -42,4 +38,9 @@ public class ScheduleController {
                 .status(HttpStatus.OK)
                 .body(seatService.getSeatLayout(scheduleId));
     }
+
+
+
+
+
 }

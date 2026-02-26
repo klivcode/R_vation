@@ -1,18 +1,16 @@
 package com.busreservationsystem.bus_reservation_system.services.impl;
 
-import com.busreservationsystem.bus_reservation_system.dto.request.CompanyRequestDTO;
-import com.busreservationsystem.bus_reservation_system.dto.response.CompanyResponseDTO;
+import com.busreservationsystem.bus_reservation_system.dto.request.CompanyRequestDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.CompanyResponseDto;
 import com.busreservationsystem.bus_reservation_system.entity.Company;
 import com.busreservationsystem.bus_reservation_system.exception.ResourceNotFoundException;
 import com.busreservationsystem.bus_reservation_system.repository.CompanyRepo;
 import com.busreservationsystem.bus_reservation_system.services.CompanyService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Component
@@ -23,14 +21,14 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyRepo companyRepo;
 
     @Override
-    public CompanyResponseDTO registerCompany(CompanyRequestDTO companyRequestDTO) {
+    public CompanyResponseDto registerCompany(CompanyRequestDto companyRequestDTO) {
 
         Company company = new Company();
         company.setCompanyName(companyRequestDTO.getCompanyName());
         company.setAddress(companyRequestDTO.getAddress());
         company.setPhone(companyRequestDTO.getPhone());
         Company savedCompany = companyRepo.save(company);
-        return new CompanyResponseDTO(
+        return new CompanyResponseDto(
                 savedCompany.getId(),
                 savedCompany.getCreatedAt(),
                 savedCompany.getUpdatedAt(),
@@ -41,11 +39,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Page<CompanyResponseDTO> getAllCompany(Pageable pageable) {
+    public Page<CompanyResponseDto> getAllCompany(Pageable pageable) {
 
         Page<Company> companies = companyRepo.findAll(pageable);
 
-        return companies.map(company -> new CompanyResponseDTO(
+        return companies.map(company -> new CompanyResponseDto(
                 company.getId(),
                 company.getCreatedAt(),
                 company.getUpdatedAt(),
@@ -55,10 +53,10 @@ public class CompanyServiceImpl implements CompanyService {
         ));
     }
     @Override
-    public CompanyResponseDTO getCompanyById(Long id) {
+    public CompanyResponseDto getCompanyById(Long id) {
         Company company = companyRepo.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("Company with id " + id + " not found"));
-        return new CompanyResponseDTO(
+        return new CompanyResponseDto(
                 company.getId(),
                 company.getCreatedAt(),
                 company.getUpdatedAt(),
@@ -78,13 +76,13 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public CompanyResponseDTO updateCompanyById(CompanyRequestDTO requestDto, Long id) {
+    public CompanyResponseDto updateCompanyById(CompanyRequestDto requestDto, Long id) {
         Company company = companyRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Company with id " + id + " not found"));
         company.setCompanyName(requestDto.getCompanyName());
         company.setAddress(requestDto.getAddress());
         company.setPhone(requestDto.getPhone());
         Company savedCompany = companyRepo.save(company);
-        return new CompanyResponseDTO(
+        return new CompanyResponseDto(
                 savedCompany.getId(),
                 savedCompany.getUpdatedAt(),
                 savedCompany.getCreatedAt(),
@@ -95,7 +93,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Page<CompanyResponseDTO>searchCompanies(String companyName, String address,Pageable pageable) {
+    public Page<CompanyResponseDto>searchCompanies(String companyName, String address, Pageable pageable) {
 
         Specification<Company> specification = Specification.where((root,query,cb)->cb.conjunction());
         // first we check the is there presence of CompanyName and to lowercase
@@ -120,7 +118,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         Page <Company> companies = companyRepo.findAll(specification, pageable);
         return companies
-                .map(company -> new CompanyResponseDTO(
+                .map(company -> new CompanyResponseDto(
                         company.getId(),
                         company.getCreatedAt(),
                         company.getUpdatedAt(),

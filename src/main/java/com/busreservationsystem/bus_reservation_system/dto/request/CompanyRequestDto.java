@@ -1,18 +1,20 @@
 package com.busreservationsystem.bus_reservation_system.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RouteRequestDTO {
+public class CompanyRequestDto {
+
     @NotBlank
-    private String source;
+    private String companyName;
+
     @NotBlank
-    private String destination;
-    @NotNull
-    private Long companyId;
+    private String address;
+
+    @NotBlank
+    private String phone;
 }

@@ -1,7 +1,8 @@
 package com.busreservationsystem.bus_reservation_system.enums;
 
 public enum BookingStatus {
-    CONFIRMED,
+    BOOKED,
     CANCELLED,
+    COMPLETED
 
 }

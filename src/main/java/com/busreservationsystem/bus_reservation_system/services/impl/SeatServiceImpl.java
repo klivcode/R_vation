@@ -4,7 +4,10 @@ import com.busreservationsystem.bus_reservation_system.dto.response.SeatLayoutRe
 import com.busreservationsystem.bus_reservation_system.dto.response.SeatResponseDto;
 import com.busreservationsystem.bus_reservation_system.entity.Schedule;
 import com.busreservationsystem.bus_reservation_system.entity.Seat;
+import com.busreservationsystem.bus_reservation_system.enums.BookingStatus;
+import com.busreservationsystem.bus_reservation_system.enums.SeatStatus;
 import com.busreservationsystem.bus_reservation_system.exception.ResourceNotFoundException;
+import com.busreservationsystem.bus_reservation_system.repository.BookingRepo;
 import com.busreservationsystem.bus_reservation_system.repository.ScheduleRepo;
 import com.busreservationsystem.bus_reservation_system.repository.SeatRepo;
 import com.busreservationsystem.bus_reservation_system.services.SeatService;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class SeatServiceImpl implements SeatService {
@@ -22,20 +26,26 @@ public class SeatServiceImpl implements SeatService {
     private SeatRepo  seatRepo;
     @Autowired
     private ScheduleRepo scheduleRepo;
+
+    @Autowired
+    private BookingRepo bookingRepo;
+
+
     @Override
     public SeatLayoutResponseDto getSeatLayout(long scheduleId) {
-        // checks
-        Schedule schedule = scheduleRepo.findById(scheduleId).
-                orElseThrow(()->new ResourceNotFoundException("Schedule not found"));
-        // fetch the seats
-//        List<Seat> seats = seatRepo.findByScheduleId(scheduleId);
 
-        // 2️fetch seats ordered properly
+        // Check schedule exists
+        Schedule schedule = scheduleRepo.findById(scheduleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
+
+        // Fetch seats ordered properly
         List<Seat> seats =
                 seatRepo.findByScheduleIdOrderByRowNumberAscSeatNumberAsc(scheduleId);
 
-        List<SeatResponseDto> seatResponseDtos = new ArrayList<>();
-        // Entity -> DTO
+       Set<Long> bookedSeatIds =
+               bookingRepo.findBookedSeatIdsByScheduleId(scheduleId,BookingStatus.BOOKED);
+ List<SeatResponseDto> seatResponseDtos = new ArrayList<>();
+
         for (Seat seat : seats) {
 
             SeatResponseDto dto = new SeatResponseDto();
@@ -45,19 +55,51 @@ public class SeatServiceImpl implements SeatService {
             dto.setSide(seat.getSide());
             dto.setRowNumber(seat.getRowNumber());
             dto.setSeatType(seat.getSeatType());
-            dto.setStatus(seat.getSeatStatus());
+
+            //  Derived status
+            SeatStatus status = bookedSeatIds.contains(seat.getId())
+                    ? SeatStatus.BOOKED
+                    : SeatStatus.AVAILABLE;
+
+            dto.setStatus(status);
+
             seatResponseDtos.add(dto);
         }
-        // Response for the layout of the Seat
-        SeatLayoutResponseDto seatLayoutResponseDto = new SeatLayoutResponseDto();
-        seatLayoutResponseDto.setScheduleId(scheduleId);
-        seatLayoutResponseDto.setTotalSeats(seats.size());
 
-        // Example: layout pattern coming from Bus
-        seatLayoutResponseDto.setLayoutPattern(schedule.getBus().getLayoutPattern());
+        SeatLayoutResponseDto response = new SeatLayoutResponseDto();
+        response.setScheduleId(scheduleId);
+        response.setTotalSeats(seats.size());
+        response.setLayoutPattern(schedule.getBus().getLayoutPattern());
+        response.setSeats(seatResponseDtos);
 
-        seatLayoutResponseDto.setSeats(seatResponseDtos);
-        return seatLayoutResponseDto;
+        return response;
+    }
 
+
+
+    @Override
+    public SeatResponseDto getSeatById(Long seatId) {
+
+        Seat seat = seatRepo.findById(seatId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Seat not found"));
+
+        // derive booking status
+        boolean booked = bookingRepo
+                .existsBySeats_IdAndBookingStatus(seatId, BookingStatus.BOOKED);
+
+        SeatStatus status = booked
+                ? SeatStatus.BOOKED
+                : SeatStatus.AVAILABLE;
+
+        SeatResponseDto dto = new SeatResponseDto();
+        dto.setId(seat.getId());
+        dto.setSeatNumber(seat.getSeatNumber());
+        dto.setRowNumber(seat.getRowNumber());
+        dto.setSide(seat.getSide());
+        dto.setSeatType(seat.getSeatType());
+        dto.setStatus(status);
+
+        return dto;
     }
 }

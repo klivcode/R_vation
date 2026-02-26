@@ -1,24 +1,37 @@
 package com.busreservationsystem.bus_reservation_system.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class BookingRequestDto {
+
+    @NotBlank
+    private String firstName;
+
+    private String lastName;
+
+    @NotBlank
+    private String phoneNumber;
+
     @NotNull
     private Long scheduleId;
 
-    @NotNull
-    private Long customerId;
-
     @NotEmpty
-    private List<Long> seatIds;   // Multiple seats
+    private List<Long> seatIds;
+
+    @NotNull
+    @Positive
+    private BigDecimal paidAmount;
 
 }

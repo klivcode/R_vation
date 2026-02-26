@@ -1,8 +1,8 @@
 package com.busreservationsystem.bus_reservation_system.controller;
 
 
-import com.busreservationsystem.bus_reservation_system.dto.request.RouteRequestDTO;
-import com.busreservationsystem.bus_reservation_system.dto.response.RouteResponseDTO;
+import com.busreservationsystem.bus_reservation_system.dto.request.RouteRequestDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.RouteResponseDto;
 import com.busreservationsystem.bus_reservation_system.services.RouteService;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +24,21 @@ public class RouteController {
     private RouteService routeService;
 
     @PostMapping("/routes")
-    public ResponseEntity<RouteResponseDTO> registerRoute(@RequestBody RouteRequestDTO routeRequestDTO) {
+    public ResponseEntity<RouteResponseDto> registerRoute(@RequestBody RouteRequestDto routeRequestDTO) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(routeService.registerRoute(routeRequestDTO));
     }
 
     @GetMapping("/routes/getall")
-    public ResponseEntity<Page<RouteResponseDTO>> getAllRoutes(Pageable  pageable) {
+    public ResponseEntity<Page<RouteResponseDto>> getAllRoutes(Pageable  pageable) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(routeService.getAllRoute(pageable));
     }
 
     @GetMapping("/routes/{id}")
-    public ResponseEntity<RouteResponseDTO> getRoute(@PathVariable Long id) {
+    public ResponseEntity<RouteResponseDto> getRoute(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(routeService.getRouteById(id));
@@ -51,8 +51,8 @@ public class RouteController {
     }
 
     @PutMapping("/routes/{id}")
-    public ResponseEntity<RouteResponseDTO> updateRoute(@PathVariable Long id,
-                                                        @RequestBody RouteRequestDTO routeRequestDto) {
+    public ResponseEntity<RouteResponseDto> updateRoute(@PathVariable Long id,
+                                                        @RequestBody RouteRequestDto routeRequestDto) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(routeService.updateRouteById(id,routeRequestDto));
@@ -61,7 +61,7 @@ public class RouteController {
 
     // for the search filter by source and destination
     @GetMapping("/routes")
-    public  ResponseEntity<Page<RouteResponseDTO>> getRoutes(@ParameterObject Pageable pageable,
+    public  ResponseEntity<Page<RouteResponseDto>> getRoutes(@ParameterObject Pageable pageable,
                                                              @RequestParam(required = false) String source,
                                                              @RequestParam(required = false) String destination,
                                                              @RequestParam(required = false) Long companyId) {

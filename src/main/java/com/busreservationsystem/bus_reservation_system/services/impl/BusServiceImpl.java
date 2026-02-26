@@ -1,7 +1,7 @@
 package com.busreservationsystem.bus_reservation_system.services.impl;
 
-import com.busreservationsystem.bus_reservation_system.dto.request.BusRequestDTO;
-import com.busreservationsystem.bus_reservation_system.dto.response.BusResponseDTO;
+import com.busreservationsystem.bus_reservation_system.dto.request.BusRequestDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.BusResponseDto;
 import com.busreservationsystem.bus_reservation_system.entity.Bus;
 import com.busreservationsystem.bus_reservation_system.entity.BusSeat;
 import com.busreservationsystem.bus_reservation_system.entity.Company;
@@ -33,7 +33,7 @@ public class BusServiceImpl implements BusService {
 
 
     @Override
-    public BusResponseDTO registerBus(BusRequestDTO busRequestDto) {
+    public BusResponseDto registerBus(BusRequestDto busRequestDto) {
 
         Company company = companyRepo.findById(busRequestDto.getCompanyId())
                 .orElseThrow(() -> new ResourceNotFoundException("Company not found"));
@@ -55,7 +55,7 @@ public class BusServiceImpl implements BusService {
 
 
 
-        return new BusResponseDTO(
+        return new BusResponseDto(
                 savedBus.getId(),
                 savedBus.getCreatedAt(),
                 savedBus.getUpdatedAt(),
@@ -72,10 +72,10 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public Page<BusResponseDTO> getAllBus(Pageable pageable) {
+    public Page<BusResponseDto> getAllBus(Pageable pageable) {
         Page <Bus> Bus  = busRepo.findAll(pageable);
         return Bus
-                .map(bus->new BusResponseDTO(
+                .map(bus->new BusResponseDto(
                         bus.getId(),
                         bus.getCreatedAt(),
                         bus.getUpdatedAt(),
@@ -93,9 +93,9 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public BusResponseDTO getBusById(long id) {
+    public BusResponseDto getBusById(long id) {
         Bus bus= busRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Company not found"));
-        return new BusResponseDTO(
+        return new BusResponseDto(
                 bus.getId(),
                 bus.getCreatedAt(),
                 bus.getUpdatedAt(),
@@ -113,7 +113,7 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public BusResponseDTO updateBusById(BusRequestDTO busRequestDto, long id) {
+    public BusResponseDto updateBusById(BusRequestDto busRequestDto, long id) {
         Bus bus = busRepo.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Company not found"));
         bus.setBusNumber(busRequestDto.getBusNumber());
@@ -125,7 +125,7 @@ public class BusServiceImpl implements BusService {
         bus.setLastRowExtraSide(busRequestDto.getLastRowExtraSide());
         bus.setCompany(bus.getCompany());
         Bus savedBus = busRepo.save(bus);
-        return new BusResponseDTO(
+        return new BusResponseDto(
                 savedBus.getId(),
                 savedBus.getCreatedAt(),
                 savedBus.getUpdatedAt(),
@@ -150,7 +150,7 @@ public class BusServiceImpl implements BusService {
     }
 
     @Override
-    public Page<BusResponseDTO> searchBus(String busNumber, Boolean hasVipSeat, String busType, Long companyId, Pageable pageable) {
+    public Page<BusResponseDto> searchBus(String busNumber, Boolean hasVipSeat, String busType, Long companyId, Pageable pageable) {
         Specification<Bus> spec = (root, query, cb) -> cb.conjunction();
 
         if (busNumber != null && !busNumber.isBlank()) {
@@ -186,7 +186,7 @@ public class BusServiceImpl implements BusService {
         Page<Bus> buses = busRepo.findAll(spec, pageable);
 
         return buses
-                .map(bus->new BusResponseDTO(
+                .map(bus->new BusResponseDto(
                         bus.getId(),
                         bus.getCreatedAt(),
                         bus.getUpdatedAt(),

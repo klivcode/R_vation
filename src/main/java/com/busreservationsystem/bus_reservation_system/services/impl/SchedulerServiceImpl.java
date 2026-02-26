@@ -1,11 +1,8 @@
 package com.busreservationsystem.bus_reservation_system.services.impl;
 
-import com.busreservationsystem.bus_reservation_system.dto.request.ScheduleRequestDTO;
-import com.busreservationsystem.bus_reservation_system.dto.response.ScheduleResponseDTO;
+import com.busreservationsystem.bus_reservation_system.dto.request.ScheduleRequestDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.ScheduleResponseDto;
 import com.busreservationsystem.bus_reservation_system.entity.*;
-import com.busreservationsystem.bus_reservation_system.enums.SeatSide;
-import com.busreservationsystem.bus_reservation_system.enums.SeatStatus;
-import com.busreservationsystem.bus_reservation_system.enums.SeatType;
 import com.busreservationsystem.bus_reservation_system.exception.ResourceNotFoundException;
 import com.busreservationsystem.bus_reservation_system.repository.*;
 import com.busreservationsystem.bus_reservation_system.services.ScheduleService;
@@ -17,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ScheduleServiceImpl implements ScheduleService {
+public class SchedulerServiceImpl implements ScheduleService {
 
     @Autowired
     private ScheduleRepo scheduleRepo;
@@ -33,7 +30,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     @Transactional
-    public ScheduleResponseDTO createSchedule(ScheduleRequestDTO scheduleRequestDTO) {
+    public ScheduleResponseDto createSchedule(ScheduleRequestDto scheduleRequestDTO) {
       // validate the id for the bus and route firstly
         Bus bus = busRepo.findById(scheduleRequestDTO.getBusId())
                 .orElseThrow(() -> new ResourceNotFoundException("Bus not found"));
@@ -51,7 +48,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setScheduleStatus(scheduleRequestDTO.getScheduleStatus());
         Schedule savedSchedule = scheduleRepo.save(schedule);
         generateScheduleSeats(savedSchedule);
-        return new ScheduleResponseDTO(
+        return new ScheduleResponseDto(
                 savedSchedule.getId(),
                 savedSchedule.getCreatedAt(),
                 savedSchedule.getUpdatedAt(),
@@ -69,7 +66,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         );
     }
 
-
     private void generateScheduleSeats(Schedule schedule) {
 
         List<BusSeat> templates =
@@ -85,10 +81,10 @@ public class ScheduleServiceImpl implements ScheduleService {
             seat.setRowNumber(template.getRowNumber());
             seat.setSide(template.getSide());
             seat.setSeatType(template.getSeatType());
-            seat.setSeatStatus(SeatStatus.AVAILABLE);
 
             seats.add(seat);
         }
+
         seatRepo.saveAll(seats);
     }
 }

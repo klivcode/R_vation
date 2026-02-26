@@ -1,26 +1,24 @@
 package com.busreservationsystem.bus_reservation_system.services;
 
-import com.busreservationsystem.bus_reservation_system.dto.request.CompanyRequestDTO;
-import com.busreservationsystem.bus_reservation_system.dto.response.CompanyResponseDTO;
+import com.busreservationsystem.bus_reservation_system.dto.request.CompanyRequestDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.CompanyResponseDto;
 
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public interface CompanyService {
-    CompanyResponseDTO registerCompany(CompanyRequestDTO companyRequestDTO);
+    CompanyResponseDto registerCompany(CompanyRequestDto companyRequestDTO);
 
-    Page<CompanyResponseDTO> getAllCompany(Pageable pageable);
+    Page<CompanyResponseDto> getAllCompany(Pageable pageable);
 
-    CompanyResponseDTO getCompanyById(Long id);
+    CompanyResponseDto getCompanyById(Long id);
 
     void deleteCompanyById(Long id);
 
-    CompanyResponseDTO updateCompanyById(CompanyRequestDTO requestDto, Long id);
+    CompanyResponseDto updateCompanyById(CompanyRequestDto requestDto, Long id);
 
-    Page<CompanyResponseDTO> searchCompanies(String companyName, String address, Pageable pageable);
+    Page<CompanyResponseDto> searchCompanies(String companyName, String address, Pageable pageable);
 }

@@ -1,7 +1,7 @@
 package com.busreservationsystem.bus_reservation_system.services.impl;
 
-import com.busreservationsystem.bus_reservation_system.dto.request.RouteRequestDTO;
-import com.busreservationsystem.bus_reservation_system.dto.response.RouteResponseDTO;
+import com.busreservationsystem.bus_reservation_system.dto.request.RouteRequestDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.RouteResponseDto;
 import com.busreservationsystem.bus_reservation_system.entity.Company;
 import com.busreservationsystem.bus_reservation_system.entity.Route;
 import com.busreservationsystem.bus_reservation_system.exception.ResourceNotFoundException;
@@ -23,7 +23,7 @@ public class RouteServiceImpl implements RouteService {
 
 
     @Override
-    public RouteResponseDTO registerRoute(RouteRequestDTO routeRequestDTO) {
+    public RouteResponseDto registerRoute(RouteRequestDto routeRequestDTO) {
 
         Company company = companyRepo.findById(routeRequestDTO.getCompanyId())
                 .orElseThrow(() -> new ResourceNotFoundException("Company not found"));
@@ -39,7 +39,7 @@ public class RouteServiceImpl implements RouteService {
         }
         Route savedRoute = routeRepo.save(route);
         // entity -> DTO
-        return new RouteResponseDTO(
+        return new RouteResponseDto(
                 savedRoute.getId(),
                 savedRoute.getCreatedAt(),
                 savedRoute.getUpdatedAt(),
@@ -50,10 +50,10 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public Page<RouteResponseDTO> getAllRoute(Pageable pageable) {
+    public Page<RouteResponseDto> getAllRoute(Pageable pageable) {
         Page<Route> routes = routeRepo.findAll(pageable);
         return routes.map(
-                route -> new RouteResponseDTO(
+                route -> new RouteResponseDto(
                         route.getId(),
                         route.getCreatedAt(),
                         route.getUpdatedAt(),
@@ -65,12 +65,12 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public RouteResponseDTO getRouteById(Long id) {
+    public RouteResponseDto getRouteById(Long id) {
         //Validate the id
         Route route = routeRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Route not found"));
 
-        return new RouteResponseDTO(
+        return new RouteResponseDto(
                 route.getId(),
                 route.getCreatedAt(),
                 route.getUpdatedAt(),
@@ -89,13 +89,13 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public RouteResponseDTO updateRouteById(Long id, RouteRequestDTO routeRequestDto) {
+    public RouteResponseDto updateRouteById(Long id, RouteRequestDto routeRequestDto) {
         //Validate the id
         Route route = routeRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Route not found"));
         route.setSource(routeRequestDto.getSource());
         route.setDestination(routeRequestDto.getDestination());
         Route savedRoute =  routeRepo.save(route);
-        return new RouteResponseDTO(
+        return new RouteResponseDto(
                 savedRoute.getId(),
                 savedRoute.getCreatedAt(),
                 savedRoute.getUpdatedAt(),
@@ -107,7 +107,7 @@ public class RouteServiceImpl implements RouteService {
 
 
     @Override
-    public Page<RouteResponseDTO> searchRoutes(Pageable pageable,String source,
+    public Page<RouteResponseDto> searchRoutes(Pageable pageable, String source,
                                                String destination,
                                                Long companyId
                                                ) {
@@ -140,7 +140,7 @@ public class RouteServiceImpl implements RouteService {
 
         Page<Route> routes = routeRepo.findAll(spec, pageable);
 
-        return routes.map(route -> new RouteResponseDTO(
+        return routes.map(route -> new RouteResponseDto(
                 route.getId(),
                 route.getCreatedAt(),
                 route.getUpdatedAt(),

@@ -2,7 +2,6 @@ package com.busreservationsystem.bus_reservation_system.dto.response;
 
 import com.busreservationsystem.bus_reservation_system.dto.BaseDto;
 import com.busreservationsystem.bus_reservation_system.enums.SeatSide;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BusResponseDTO extends BaseDto {
+public class BusResponseDto extends BaseDto {
 
     private String busNumber;
     private Integer totalSeats;
@@ -24,7 +23,7 @@ public class BusResponseDTO extends BaseDto {
     private Long companyId;
     private String companyName;
 
-    public BusResponseDTO(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String busNumber, Integer totalSeats, String busType, String layoutPattern, Boolean hasVipSeat, SeatSide VipseatSide, SeatSide lastRowExtraSeatSide, Long companyId, String companyName) {
+    public BusResponseDto(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String busNumber, Integer totalSeats, String busType, String layoutPattern, Boolean hasVipSeat, SeatSide VipseatSide, SeatSide lastRowExtraSeatSide, Long companyId, String companyName) {
         super(id, createdAt, updatedAt);
         this.busNumber = busNumber;
         this.totalSeats = totalSeats;

@@ -1,7 +1,7 @@
 package com.busreservationsystem.bus_reservation_system.services;
 
-import com.busreservationsystem.bus_reservation_system.dto.request.RouteRequestDTO;
-import com.busreservationsystem.bus_reservation_system.dto.response.RouteResponseDTO;
+import com.busreservationsystem.bus_reservation_system.dto.request.RouteRequestDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.RouteResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public interface RouteService {
 
-    RouteResponseDTO registerRoute(RouteRequestDTO routeRequestDTO);
+    RouteResponseDto registerRoute(RouteRequestDto routeRequestDTO);
 
-    Page<RouteResponseDTO> getAllRoute(Pageable pageable);
+    Page<RouteResponseDto> getAllRoute(Pageable pageable);
 
-    RouteResponseDTO getRouteById(Long id);
+    RouteResponseDto getRouteById(Long id);
 
     void deleteRouteById(Long id);
 
-    RouteResponseDTO updateRouteById(Long id, RouteRequestDTO routeRequestDto);
+    RouteResponseDto updateRouteById(Long id, RouteRequestDto routeRequestDto);
 
-    Page<RouteResponseDTO> searchRoutes(Pageable pageable, String source, String destination,Long companyId);
+    Page<RouteResponseDto> searchRoutes(Pageable pageable, String source, String destination, Long companyId);
 }

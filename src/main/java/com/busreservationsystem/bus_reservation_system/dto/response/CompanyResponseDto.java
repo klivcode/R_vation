@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CompanyResponseDTO extends BaseDto {
+public class CompanyResponseDto extends BaseDto {
 
     private String companyName;
     private String address;
     private String phone;
 
 
-    public CompanyResponseDTO(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String companyName, String address, String phone) {
+    public CompanyResponseDto(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String companyName, String address, String phone) {
         super(id, createdAt, updatedAt);
         this.companyName = companyName;
         this.address = address;
