@@ -17,4 +17,7 @@ public interface TicketService {
     TicketResponseDto generateTicket(Booking booking);
 
     TicketPrintDto getTicketForPrint(Long id);
+
+
+    byte[] generateThermalPdf(TicketPrintDto dto);
 }

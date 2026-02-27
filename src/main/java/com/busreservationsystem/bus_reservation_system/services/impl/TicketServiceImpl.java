@@ -11,10 +11,17 @@ import com.busreservationsystem.bus_reservation_system.exception.TicketNotFoundE
 import com.busreservationsystem.bus_reservation_system.repository.BookingRepo;
 import com.busreservationsystem.bus_reservation_system.repository.TicketRepo;
 import com.busreservationsystem.bus_reservation_system.services.TicketService;
-import jakarta.transaction.Transactional;
+import com.lowagie.text.Font;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.lowagie.text.Document;
 
+
+import java.io.ByteArrayOutputStream;
+import java.time.format.DateTimeFormatter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,6 +50,7 @@ public class TicketServiceImpl implements TicketService {
         Ticket ticket = new Ticket();
         ticket.setBooking(booking);
         ticket.setIssueDate(LocalDateTime.now());
+        ticket.setPrintedAt(LocalDateTime.now());
         ticket.setStatus(TicketStatus.ISSUED);
         ticket.setTicketNumber(generateTicketNumber(booking));
 //        ticket.setQrCodeUrl(generateQrCode(booking));
@@ -154,8 +162,74 @@ public class TicketServiceImpl implements TicketService {
                 booking.getTotalAmount(),
                 booking.getPaidAmount(),
                 dueAmount,
+                booking.getSchedule().getDepartureTime(),
                 booking.getSchedule().getBus().getBusNumber()
         );
+    }
+
+
+
+    @Override
+    public byte[] generateThermalPdf(TicketPrintDto dto) {
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        try {
+
+            Rectangle pageSize = new Rectangle(226f, 700f);
+            Document document = new Document(pageSize, 10, 10, 10, 10);
+
+            PdfWriter.getInstance(document, out);
+            document.open();
+
+            Font font = new Font(Font.COURIER, 8);
+
+            DateTimeFormatter dtf =
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+            DateTimeFormatter df =
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            document.add(new Paragraph("================================", font));
+            document.add(new Paragraph("           BUS TICKET", font));
+            document.add(new Paragraph("================================", font));
+
+            document.add(new Paragraph("Ticket No : " + dto.getTicketNumber(), font));
+            document.add(new Paragraph("Status    : " + dto.getStatus(), font));
+            document.add(new Paragraph("Issued    : " + dto.getIssueDate().format(dtf), font));
+            document.add(new Paragraph("Printed   : " + dto.getPrintedAt().format(dtf), font));
+
+            document.add(new Paragraph("--------------------------------", font));
+
+            document.add(new Paragraph("Booking   : " + dto.getBookingReference(), font));
+            document.add(new Paragraph("Customer  : " + dto.getCustomerName(), font));
+            document.add(new Paragraph("Route     : " + dto.getRoute(), font));
+            document.add(new Paragraph("Travel    : " + dto.getTravelDate().format(df), font));
+            document.add(new Paragraph("Departure : " + dto.getDepartureDateTime().format(dtf), font));
+            document.add(new Paragraph("Bus No    : " + dto.getBusNumber(), font));
+
+            document.add(new Paragraph("Seats     : " +
+                    String.join(", ", dto.getSeatNumbers()), font));
+
+            document.add(new Paragraph("Passengers: " + dto.getCountPassengers(), font));
+
+            document.add(new Paragraph("--------------------------------", font));
+
+            document.add(new Paragraph("Total     : " + dto.getTotalAmount(), font));
+            document.add(new Paragraph("Paid      : " + dto.getPaidAmount(), font));
+            document.add(new Paragraph("Due       : " + dto.getDueAmount(), font));
+
+            document.add(new Paragraph("================================", font));
+            document.add(new Paragraph("           Thank You!", font));
+            document.add(new Paragraph("================================", font));
+
+            document.close();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Thermal PDF generation failed", e);
+        }
+
+        return out.toByteArray();
     }
 
 

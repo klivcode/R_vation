@@ -6,7 +6,9 @@ import com.busreservationsystem.bus_reservation_system.dto.response.TicketRespon
 import com.busreservationsystem.bus_reservation_system.entity.Ticket;
 import com.busreservationsystem.bus_reservation_system.services.TicketService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +41,25 @@ public class TicketController {
     @GetMapping("/by-booking/{bookingId}")
     public TicketResponseDto getByBooking(@PathVariable Long bookingId) {
         return ticketService.getByBooking(bookingId);
+    }
+
+
+    @GetMapping("/{bookingId}/thermal")
+    public ResponseEntity<byte[]> generateThermal(
+            @PathVariable Long bookingId) {
+
+        TicketPrintDto dto =
+                ticketService.getTicketForPrint(bookingId);
+
+        byte[] pdf =
+                ticketService.generateThermalPdf(dto);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=ticket.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .contentLength(pdf.length)
+                .body(pdf);
     }
 
 //    @PutMapping("/{id}/print")

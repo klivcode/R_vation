@@ -31,10 +31,10 @@ public class TicketPrintDto {
     private BigDecimal totalAmount;
     private BigDecimal paidAmount;
     private BigDecimal dueAmount;
-
+    private LocalDateTime departureDateTime;
     private String busNumber;
 
-    public TicketPrintDto(String ticketNumber, LocalDateTime issueDate, LocalDateTime printedAt, TicketStatus status, String bookingReference, String customerName, String route, LocalDate travelDate, List<String> seatNumbers, Integer countPassengers, BigDecimal totalAmount, BigDecimal paidAmount, BigDecimal dueAmount, String busNumber) {
+    public TicketPrintDto(String ticketNumber, LocalDateTime issueDate, LocalDateTime printedAt, TicketStatus status, String bookingReference, String customerName, String route, LocalDate travelDate, List<String> seatNumbers, Integer countPassengers, BigDecimal totalAmount, BigDecimal paidAmount, BigDecimal dueAmount, LocalDateTime departureDateTime, String busNumber) {
         this.ticketNumber = ticketNumber;
         this.issueDate = issueDate;
         this.printedAt = printedAt;
@@ -48,6 +48,7 @@ public class TicketPrintDto {
         this.totalAmount = totalAmount;
         this.paidAmount = paidAmount;
         this.dueAmount = dueAmount;
+        this.departureDateTime = departureDateTime;
         this.busNumber = busNumber;
     }
 }
