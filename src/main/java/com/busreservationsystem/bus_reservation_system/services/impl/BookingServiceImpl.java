@@ -2,12 +2,14 @@ package com.busreservationsystem.bus_reservation_system.services.impl;
 
 import com.busreservationsystem.bus_reservation_system.dto.request.BookingRequestDto;
 import com.busreservationsystem.bus_reservation_system.dto.response.BookingResponseDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.TicketResponseDto;
 import com.busreservationsystem.bus_reservation_system.entity.*;
 import com.busreservationsystem.bus_reservation_system.enums.BookingStatus;
 import com.busreservationsystem.bus_reservation_system.enums.PaymentState;
 import com.busreservationsystem.bus_reservation_system.exception.ResourceNotFoundException;
 import com.busreservationsystem.bus_reservation_system.repository.*;
 import com.busreservationsystem.bus_reservation_system.services.BookingService;
+import com.busreservationsystem.bus_reservation_system.services.TicketService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private BookingReferenceGeneratorService bookingReferenceGeneratorService;
+
+    @Autowired
+    private TicketService ticketService;
 
 
     @Override
@@ -133,10 +138,10 @@ public class BookingServiceImpl implements BookingService {
         } else {
             booking.setPaymentState(PaymentState.UNPAID);
         }
-
+        booking.setPassengerCount(bookingRequestDto.getPassengerCount());
         Booking savedBooking=bookingRepo.save(booking);
 
-        String customerName = bookingRequestDto.getFirstName() + " " + bookingRequestDto.getLastName();
+        String customerName = bookingRequestDto.getFirstName() + " TO " + bookingRequestDto.getLastName();
         List<String> seatNumbers = booking.getBookingSeats()
                 .stream()
                 .map(bs -> bs.getSeat().getSeatNumber())
@@ -150,7 +155,8 @@ public class BookingServiceImpl implements BookingService {
                 savedBooking.getSchedule().getId(),
                 savedBooking.getCustomer().getId(),
                 customerName,
-                savedBooking.getSchedule().getRoute().toString(),
+                savedBooking.getPassengerCount(),
+                savedBooking.getSchedule().getRoute().getSource()+" "+savedBooking.getSchedule().getRoute().getDestination(),
                 savedBooking.getSchedule().getTravelDate(),
                 savedBooking.getSchedule().getBus().getBusNumber(),
                 seatNumbers,
@@ -163,11 +169,18 @@ public class BookingServiceImpl implements BookingService {
         );
     }
 
-    @Override
-    public Page<BookingResponseDto> getBooked(Pageable pageable) {
 
-        //TODO
-        return null;
+
+
+    @Transactional
+    @Override
+    public TicketResponseDto getGeneratedTicket(long id) {
+
+        Booking booking = bookingRepo.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Booking not found"));
+
+        return ticketService.generateTicket(booking);
     }
 
 

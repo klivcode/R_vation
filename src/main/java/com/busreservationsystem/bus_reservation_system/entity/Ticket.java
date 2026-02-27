@@ -38,7 +38,7 @@ public class Ticket extends BaseEntity {
 
     private LocalDateTime printedAt;
 
-    private String qrCodeUrl;
+//    private String qrCodeUrl;
 
     @Enumerated(EnumType.STRING)
     private TicketStatus status;

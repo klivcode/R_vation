@@ -3,6 +3,7 @@ package com.busreservationsystem.bus_reservation_system.controller;
 
 import com.busreservationsystem.bus_reservation_system.dto.request.BookingRequestDto;
 import com.busreservationsystem.bus_reservation_system.dto.response.BookingResponseDto;
+import com.busreservationsystem.bus_reservation_system.dto.response.TicketResponseDto;
 import com.busreservationsystem.bus_reservation_system.services.BookingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,13 @@ public class BookingController {
                 .body(bookingService.createBooking(bookingRequestDto));
     }
 
-    @GetMapping("/booking")
-    public ResponseEntity<Page<BookingResponseDto>> getBooking(Pageable pageable) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(bookingService.getBooked(pageable));
+
+    @GetMapping("/bookings/{bookingId}/generate/ticket")
+    public TicketResponseDto getGeneratedTicket(@PathVariable long bookingId)
+    {  TicketResponseDto ticketResponseDto= bookingService.getGeneratedTicket(bookingId);
+        return ticketResponseDto;
     }
+
+
+
 }

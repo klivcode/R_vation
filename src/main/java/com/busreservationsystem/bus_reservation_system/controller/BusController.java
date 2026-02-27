@@ -70,11 +70,11 @@ public class BusController {
 
 
     // search (filter By bus number, vip seat, company id,bus type)
-    @Tag(name = "Bus API", description = "APIs for managing and searching buses")
-    @Operation(
-            summary = "Search Buses",
-            description = "Search buses using optional filters like bus number, VIP seat availability, bus type, and company ID with pagination support."
-    )
+//    @Tag(name = "Bus API", description = "APIs for managing and searching buses")
+//    @Operation(
+//            summary = "Search Buses",
+//            description = "Search buses using optional filters like bus number, VIP seat availability, bus type, and company ID with pagination support."
+//    )
 
     @GetMapping("/buses")
     public ResponseEntity<Page<BusResponseDto>> searchBus(

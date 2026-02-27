@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class TicketResponseDto extends BaseDto {
 
@@ -17,9 +16,17 @@ public class TicketResponseDto extends BaseDto {
     private LocalDateTime issueDate;
     private LocalDateTime printedAt;
 
-    private String qrCodeUrl;
 
     private TicketStatus status;
 
     private String bookingReference;
+
+    public TicketResponseDto(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String ticketNumber, LocalDateTime issueDate, LocalDateTime printedAt, TicketStatus status, String bookingReference) {
+        super(id, createdAt, updatedAt);
+        this.ticketNumber = ticketNumber;
+        this.issueDate = issueDate;
+        this.printedAt = printedAt;
+        this.status = status;
+        this.bookingReference = bookingReference;
+    }
 }

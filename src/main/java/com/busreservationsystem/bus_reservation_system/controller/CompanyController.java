@@ -69,11 +69,11 @@ public class CompanyController {
 
 
     // Searching (filter) the companyName and address of company
-    @Tag(name = "Company API", description = "APIs for managing and searching transport companies")
-    @Operation(
-            summary = "Search Companies",
-            description = "Search companies using optional filters such as company name and address with pagination and sorting support."
-    )
+//    @Tag(name = "Company API", description = "APIs for managing and searching transport companies")
+//    @Operation(
+//            summary = "Search Companies",
+//            description = "Search companies using optional filters such as company name and address with pagination and sorting support."
+//    )
     @GetMapping("/companies")
     public Page<CompanyResponseDto> searchCompanies(
 
