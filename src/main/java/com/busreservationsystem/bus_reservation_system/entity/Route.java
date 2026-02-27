@@ -21,6 +21,7 @@ import lombok.*;
                 )
         }
 )
+@ToString
 public class Route extends BaseEntity {
 
     @Id

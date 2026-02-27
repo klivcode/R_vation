@@ -54,6 +54,8 @@ public class Booking extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal dueAmount;
 
+    private Integer passengerCount;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentState paymentState;

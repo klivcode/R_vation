@@ -5,14 +5,14 @@ import com.busreservationsystem.bus_reservation_system.dto.response.BookingRespo
 import com.busreservationsystem.bus_reservation_system.entity.*;
 import com.busreservationsystem.bus_reservation_system.enums.BookingStatus;
 import com.busreservationsystem.bus_reservation_system.enums.PaymentState;
-import com.busreservationsystem.bus_reservation_system.enums.PaymentStatus;
+import com.busreservationsystem.bus_reservation_system.exception.ResourceNotFoundException;
 import com.busreservationsystem.bus_reservation_system.repository.*;
-import com.busreservationsystem.bus_reservation_system.services.BookingReferenceGeneratorService;
 import com.busreservationsystem.bus_reservation_system.services.BookingService;
-import com.busreservationsystem.bus_reservation_system.services.CustomerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -37,6 +37,8 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private ScheduleRepo scheduleRepo;
 
+    @Autowired
+    private BookingReferenceGeneratorService bookingReferenceGeneratorService;
 
 
     @Override
@@ -67,8 +69,6 @@ public class BookingServiceImpl implements BookingService {
 
 
         // generate Booking Reference
-
-        BookingReferenceGeneratorServiceImpl bookingReferenceGeneratorService = new BookingReferenceGeneratorServiceImpl();
         String bookingReference = bookingReferenceGeneratorService.generateReference();
 
         Booking booking = new Booking();
@@ -137,11 +137,11 @@ public class BookingServiceImpl implements BookingService {
         Booking savedBooking=bookingRepo.save(booking);
 
         String customerName = bookingRequestDto.getFirstName() + " " + bookingRequestDto.getLastName();
-        List<String> busNumbers = List.of(
-                booking.getSchedule()
-                        .getBus()
-                        .getBusNumber()
-        );
+        List<String> seatNumbers = booking.getBookingSeats()
+                .stream()
+                .map(bs -> bs.getSeat().getSeatNumber())
+                .toList();
+
         return new BookingResponseDto(
                     savedBooking.getId(),
                 savedBooking.getCreatedAt(),
@@ -152,7 +152,8 @@ public class BookingServiceImpl implements BookingService {
                 customerName,
                 savedBooking.getSchedule().getRoute().toString(),
                 savedBooking.getSchedule().getTravelDate(),
-                busNumbers,
+                savedBooking.getSchedule().getBus().getBusNumber(),
+                seatNumbers,
                 savedBooking.getBookingStatus(),
                 savedBooking.getTotalAmount(),
                 savedBooking.getPaidAmount(),
@@ -161,4 +162,13 @@ public class BookingServiceImpl implements BookingService {
                 savedBooking.getBookingDateTime()
         );
     }
+
+    @Override
+    public Page<BookingResponseDto> getBooked(Pageable pageable) {
+
+        //TODO
+        return null;
+    }
+
+
 }

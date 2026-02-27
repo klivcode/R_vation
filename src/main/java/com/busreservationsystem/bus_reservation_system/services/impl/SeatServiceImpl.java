@@ -8,6 +8,7 @@ import com.busreservationsystem.bus_reservation_system.enums.BookingStatus;
 import com.busreservationsystem.bus_reservation_system.enums.SeatStatus;
 import com.busreservationsystem.bus_reservation_system.exception.ResourceNotFoundException;
 import com.busreservationsystem.bus_reservation_system.repository.BookingRepo;
+import com.busreservationsystem.bus_reservation_system.repository.BookingSeatRepo;
 import com.busreservationsystem.bus_reservation_system.repository.ScheduleRepo;
 import com.busreservationsystem.bus_reservation_system.repository.SeatRepo;
 import com.busreservationsystem.bus_reservation_system.services.SeatService;
@@ -29,6 +30,8 @@ public class SeatServiceImpl implements SeatService {
 
     @Autowired
     private BookingRepo bookingRepo;
+    @Autowired
+    private BookingSeatRepo bookingSeatRepo;
 
 
     @Override
@@ -86,7 +89,7 @@ public class SeatServiceImpl implements SeatService {
 
         // derive booking status
         boolean booked = bookingRepo
-                .existsBySeats_IdAndBookingStatus(seatId, BookingStatus.BOOKED);
+                .existsByBookingSeats_Seat_IdAndBookingStatus(seatId, BookingStatus.BOOKED);
 
         SeatStatus status = booked
                 ? SeatStatus.BOOKED

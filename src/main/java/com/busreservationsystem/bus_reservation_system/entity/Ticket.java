@@ -1,6 +1,7 @@
 package com.busreservationsystem.bus_reservation_system.entity;
 
 import com.busreservationsystem.bus_reservation_system.common.BaseEntity;
+import com.busreservationsystem.bus_reservation_system.enums.TicketStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,13 +31,19 @@ public class Ticket extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ticket_number", nullable = false)
+    @Column(name = "ticket_number", nullable = false, unique = true)
     private String ticketNumber;
 
     private LocalDateTime issueDate;
+
+    private LocalDateTime printedAt;
+
     private String qrCodeUrl;
 
-    @OneToOne
-    @JoinColumn(name = "booking_id", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TicketStatus status;
+
+    @OneToOne(optional = false)
+    @JoinColumn(name = "booking_id", nullable = false, unique = true)
     private Booking booking;
 }

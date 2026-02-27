@@ -26,11 +26,11 @@ public class BookingResponseDto extends BaseDto {
     private String customerName;        // Better for UI
     private String route;               // e.g. KTM → Pokhara
     private LocalDate travelDate;
-
+    private Integer passengerCount;
     private List<String> seatNumbers;
 
     private BookingStatus status;
-
+    private String busNumbers;
     private BigDecimal totalAmount;
     private BigDecimal paidAmount;
     private BigDecimal dueAmount;
@@ -38,14 +38,16 @@ public class BookingResponseDto extends BaseDto {
     private PaymentState paymentState;
     private LocalDateTime bookingDateTime;
 
-    public BookingResponseDto(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String bookingReference, Long scheduleId, Long customerId, String customerName, String route, LocalDate travelDate, List<String> seatNumbers, BookingStatus status, BigDecimal totalAmount, BigDecimal paidAmount, BigDecimal dueAmount, PaymentState paymentState, LocalDateTime bookingDateTime) {
+    public BookingResponseDto(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String bookingReference, Long scheduleId, Long customerId, String customerName,Integer passengerCount, String route, LocalDate travelDate,String busNumbers, List<String> seatNumbers, BookingStatus status, BigDecimal totalAmount, BigDecimal paidAmount, BigDecimal dueAmount, PaymentState paymentState, LocalDateTime bookingDateTime) {
         super(id, createdAt, updatedAt);
         this.bookingReference = bookingReference;
         this.scheduleId = scheduleId;
         this.customerId = customerId;
         this.customerName = customerName;
+        this.passengerCount = passengerCount;
         this.route = route;
         this.travelDate = travelDate;
+        this.busNumbers = busNumbers;
         this.seatNumbers = seatNumbers;
         this.status = status;
         this.totalAmount = totalAmount;

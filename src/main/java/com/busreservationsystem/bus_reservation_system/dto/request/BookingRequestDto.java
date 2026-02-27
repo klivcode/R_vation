@@ -20,6 +20,7 @@ public class BookingRequestDto {
     private String firstName;
 
     private String lastName;
+    private Integer passengerCount;
 
     @NotBlank
     private String phoneNumber;

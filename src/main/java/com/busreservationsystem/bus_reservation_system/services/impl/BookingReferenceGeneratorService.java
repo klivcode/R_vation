@@ -2,21 +2,19 @@ package com.busreservationsystem.bus_reservation_system.services.impl;
 
 import com.busreservationsystem.bus_reservation_system.entity.BookingSequence;
 import com.busreservationsystem.bus_reservation_system.repository.BookingSequenceRepo;
-import com.busreservationsystem.bus_reservation_system.services.BookingReferenceGeneratorService;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@Component
-@NoArgsConstructor
-public class BookingReferenceGeneratorServiceImpl implements BookingReferenceGeneratorService {
+@Service
+public class BookingReferenceGeneratorService {
+
     @Autowired
     private BookingSequenceRepo  bookingSequenceRepo;
-
 
     @Transactional
     public String generateReference() {
