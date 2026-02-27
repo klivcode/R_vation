@@ -141,7 +141,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setPassengerCount(bookingRequestDto.getPassengerCount());
         Booking savedBooking=bookingRepo.save(booking);
 
-        String customerName = bookingRequestDto.getFirstName() + " TO " + bookingRequestDto.getLastName();
+        String customerName = bookingRequestDto.getFirstName() + " " + bookingRequestDto.getLastName();
         List<String> seatNumbers = booking.getBookingSeats()
                 .stream()
                 .map(bs -> bs.getSeat().getSeatNumber())
@@ -156,7 +156,7 @@ public class BookingServiceImpl implements BookingService {
                 savedBooking.getCustomer().getId(),
                 customerName,
                 savedBooking.getPassengerCount(),
-                savedBooking.getSchedule().getRoute().getSource()+" "+savedBooking.getSchedule().getRoute().getDestination(),
+                savedBooking.getSchedule().getRoute().getSource()+" TO "+savedBooking.getSchedule().getRoute().getDestination(),
                 savedBooking.getSchedule().getTravelDate(),
                 savedBooking.getSchedule().getBus().getBusNumber(),
                 seatNumbers,
